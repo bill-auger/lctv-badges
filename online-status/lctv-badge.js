@@ -1,10 +1,13 @@
-/* to use this badge on your website
-  * include this script
-      <script type="text/javascript" src="https://raw.githubusercontent.com/bill-auger/lctv-badges/master/online-status/lctv-badge.js">
-  * add an A and IMG tag to your HTML
-      <a id="MY_LCTV_CHANNEL_NAME">
-        <img id="lctv-online-status" width="100" height="24" />
-      </a>
+/* LCTV online status badge - initial prototype using sheilds.io
+
+  to use this badge on your website:
+
+  1. add this A and IMG tag to your HTML
+       <a id="MY_LCTV_CHANNEL_NAME" class="lctv-badge-a">
+         <img id="lctv-online-status" class="lctv-badge-img" width="100" height="24" />
+       </a>
+  2. include this SCRIPT tag
+       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/online-status/lctv-badge.js"></script>
 */
 console.log("lctv-badge.js:IN") ;
 
