@@ -72,9 +72,12 @@ function get_text_width( $text ) {
  * Retrieve from livecoding.tv or from cache 'livestreams.cached'.
  * Use cache for 120 seconds from retrieval time.
  */
-$cur_time = time();
-$cached_time = filemtime( 'livestreams.cached' );
-if ( $cached_time === false || ( $cur_time - $cached_time ) > 120 ) {
+if ( file_exists( 'livestreams.cached' ) ) {
+	$cached_time = filemtime( 'livestreams.cached' );
+} else {
+	$cached_time = false;
+}
+if ( $cached_time === false || ( time() - $cached_time ) > 120 ) {
 
 	$ch = curl_init();
 	curl_setopt_array( $ch, array(
@@ -84,15 +87,15 @@ if ( $cached_time === false || ( $cur_time - $cached_time ) > 120 ) {
 	$livestreams_html = curl_exec( $ch );
 	curl_close( $ch );
 
-	$fp = fopen( 'livestreams.cached', 'w' );
-	fwrite( $fp, $livestreams_html );
-	fclose( $fp );
+	$fp = @fopen( 'livestreams.cached', 'w' );
+	@fwrite( $fp, $livestreams_html );
+	@fclose( $fp );
 
 } else {
 
-	$fp = fopen( 'livestreams.cached', 'r' );
-	$livestreams_html = fread( $fp, filesize( 'livestreams.cached' ) );
-	fclose( $fp );
+	$fp = @fopen( 'livestreams.cached', 'r' );
+	$livestreams_html = @fread( $fp, filesize( 'livestreams.cached' ) );
+	@fclose( $fp );
 
 }
 
