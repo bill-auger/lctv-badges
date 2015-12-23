@@ -1,8 +1,0 @@
-[23-Dec-2015 02:42:43 UTC] PHP Warning:  filemtime(): stat failed for livestreams.cached in /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php on line 76
-[23-Dec-2015 02:42:43 UTC] PHP Stack trace:
-[23-Dec-2015 02:42:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php:0
-[23-Dec-2015 02:42:43 UTC] PHP   2. filemtime(*uninitialized*) /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php:76
-[23-Dec-2015 02:45:30 UTC] PHP Warning:  filemtime(): stat failed for livestreams.cached in /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php on line 76
-[23-Dec-2015 02:45:30 UTC] PHP Stack trace:
-[23-Dec-2015 02:45:30 UTC] PHP   1. {main}() /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php:0
-[23-Dec-2015 02:45:30 UTC] PHP   2. filemtime(*uninitialized*) /home/ubuntu/workspace/tempwork/lctv-badges/php/index.php:76
