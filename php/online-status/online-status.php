@@ -12,8 +12,14 @@
  * @version 0.0.1
  */
 
+
+/** Bail if curl is not installed. */
+if (!function_exists('curl_version'))
+	die( 'Curl is not installed.' );
+
+
 /** Bail if no channel name. */
-if ( ! isset( $_GET['channelname'] ) || empty( $_GET['channelname'] ) ) {
+if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 	die( 'No channel name specified.' );
 }
 
@@ -42,7 +48,31 @@ function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1' ) {
 	$left_text_start = ( $left_text_width / 2 ) + 6;
 	$right_text_start = $width - ( $right_text_width / 2 ) - 6;
 
-	return '<svg xmlns="http://www.w3.org/2000/svg" width="' . $width . '" height="20"><linearGradient id="a" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><rect rx="3" width="' . $width . '" height="20" fill="#555"/><rect rx="3" x="' . $right_color_start . '" width="' . $right_color_width . '" height="20" fill="' . $color . '"/><path fill="' . $color . '" d="M' . $right_color_start . ' 0h4v20h-4z"/><rect rx="3" width="' . $width . '" height="20" fill="url(#a)"/><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="' . $left_text_start . '" y="15" fill="#010101" fill-opacity=".3">' . $left_text . '</text><text x="' . $left_text_start . '" y="14">' . $left_text . '</text><text x="' . $right_text_start . '" y="15" fill="#010101" fill-opacity=".3">' . $right_text . '</text><text x="' . $right_text_start . '" y="14">' . $right_text . '</text></g></svg>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="' . $width . '" height="20">' .
+           '<linearGradient id="a" x2="0" y2="100%">' .
+             '<stop offset="0" stop-color="#bbb" stop-opacity=".1"/>' .
+             '<stop offset="1" stop-opacity=".1"/>' .
+           '</linearGradient>' .
+           '<rect rx="3" width="' . $width . '" height="20" fill="#555"/>' .
+           '<rect rx="3" width="' . $right_color_width . '" height="20"' .
+                  ' x="' . $right_color_start . '" fill="' . $color . '"/>' .
+           '<path fill="' . $color . '" d="M' . $right_color_start . ' 0h4v20h-4z"/>' .
+           '<rect rx="3" width="' . $width . '" height="20" fill="url(#a)"/>' .
+           '<g fill="#fff" text-anchor="middle" font-family="sans-serif" font-size="12">' .
+             '<text x="' . $left_text_start . '" y="15" fill="#010101" fill-opacity=".3">' .
+                $left_text .
+             '</text>' .
+             '<text x="' . $left_text_start . '" y="14">' .
+               $left_text .
+             '</text>' .
+             '<text x="' . $right_text_start . '" y="15" fill="#010101" fill-opacity=".3">' .
+               $right_text .
+             '</text>' .
+             '<text x="' . $right_text_start . '" y="14">' .
+               $right_text .
+             '</text>' .
+           '</g>' .
+         '</svg>';
 
 }
 
@@ -100,7 +130,7 @@ if ( $cached_time === false || ( time() - $cached_time ) > 120 ) {
 }
 
 /** Search for channel name. */
-$is_online = strpos( $livestreams_html, '/video/livestream/' . strtolower( $_GET['channelname'] ) . '/thumbnail' );
+$is_online = strpos( $livestreams_html, '/video/livestream/' . strtolower( $_GET['channel'] ) . '/thumbnail' );
 
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );

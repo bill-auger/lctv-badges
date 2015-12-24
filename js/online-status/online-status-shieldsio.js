@@ -1,4 +1,4 @@
-/* LCTV online status badge - initial custom prototype
+/* LCTV online status badge - initial prototype using shields.io
 
   to use this badge on your website:
 
@@ -7,22 +7,26 @@
          <img id="lctv-online-status" class="lctv-badge-img" width="100" height="24" />
        </a>
   2. include this SCRIPT tag
-       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/online-status/lctv-badge.js"></script>
+       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status/online-status-shieldsio.js"></script>
 */
-console.log("lctv-badge.js:IN") ;
+console.log("online-status-shieldsio.js:IN") ;
 
 
 var BADGE_IMG_ID     = 'lctv-online-status' ;
+var LCTV_URL         = "https://www.livecoding.tv/" ;
 var LCTV_API_URL     = "https://www.livecoding.tv/livestreams/" ;
+var SHIELDSIO_URL    = "https://img.shields.io/badge" ;
 var XHR_STATUS_READY = 4 ;
 
 var BadgeImg    = document.getElementById(BADGE_IMG_ID) ;
-var ChannelName = BadgeImg.parentNode.id ;
+var BadgeA      = BadgeImg.parentNode ;
+var ChannelName = BadgeA.id ;
+BadgeA.href     = LCTV_URL + ChannelName ;
 
 
 function getStatus()
 {
-console.log("lctv-badge.js:getStatus() ChannelName=" + ChannelName) ;
+console.log("online-status-shieldsio.js:getStatus() ChannelName=" + ChannelName) ;
 // var stats_url = LCTV_API_URL + ChannelName + "/stats.json" ;
 // e.g. {"views_live": 4, "item_class": "livestream", "views_overall": 6958}
 
@@ -41,17 +45,17 @@ function parseJSON(xhr)
 
   var is_online = !!(~xhr.responseText.indexOf("/video/livestream/" + ChannelName + "/thumbnail")) ;
 
-console.log("lctv-badge.js:parseJSON() is_online=" + is_online) ;
+console.log("online-status-shieldsio.js:parseJSON() is_online=" + is_online) ;
 
   createBadge(is_online) ;
 }
 
 function createBadge(is_online)
 {
-  var status_img_filename = (is_online) ? "lctv-online.png" : "lctv-offline.png" ;
-  BadgeImg.src = "../img/" + status_img_filename ;
+  var status   = (is_online) ? "Online-green" : "Offline-red" ;
+  BadgeImg.src = SHIELDSIO_URL + "/LCTV-" + status + ".svg" ;
 
-console.log("lctv-badge.js:OUT") ;
+console.log("online-status-shieldsio.js:OUT") ;
 }
 
 
