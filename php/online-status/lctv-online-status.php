@@ -1,41 +1,53 @@
 <?php
 /**
  * Livecoding.tv Badges.
- * 
+ *
  * Searches https://www.livecoding.tv/livestreams/ for
  * channel name and displays a streaming now or offline
  * badge.
- * 
+ *
+ * @param string channel - (required) LCTV channel name
+ * @param string style - (optional) badge style - one of:
+ *                       * online-status-v2
+ *
  * @author  Trevor Anderson <andtrev@gmail.com>
  * @license GPLv3
  * @package LCTVBadges
- * @version 0.0.1
+ * @version 0.0.2
  */
 
 
-/** Bail if curl is not installed. */
-if (!function_exists('curl_version'))
-	die( 'Curl is not installed.' );
+define( "CHANNEL", strtolower( htmlspecialchars( $_GET['channel'] ) ) );
+define( "BADGE_STYLE", strtolower( htmlspecialchars( $_GET['style'] ) ) );
+define( "V2_IMAGE_STYLE", 'online-status-v2' );
+define( "V2_ONLINE_SVG", 'lctv-online.svg' );
+define( "V2_OFFLINE_SVG", 'lctv-offline.svg' );
 
+
+/** Bail if curl is not installed. */
+if (!function_exists('curl_version')) {
+	die( 'Curl is not installed.' );
+}
 
 /** Bail if no channel name. */
-if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
+if ( empty( constant( "CHANNEL" ) ) ) {
 	die( 'No channel name specified.' );
 }
 
+
 /**
  * Return a badge in svg format.
- * 
+ *
  * @since 0.0.1
- * 
+ *
  * @param string $left_text  Text to display on the left side of the button.
  * @param string $right_text Text to display on the right side of the button.
  * @param string $color      Hexidecimal (or other HTML acceptable color) for
  *                           right side of the button.
- * 
+ *
  * @return string An svg image.
  */
-function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1' ) {
+function get_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1' ) {
 
 	$left_text = strtolower( $left_text );
 	$right_text = strtolower( $right_text );
@@ -78,9 +90,11 @@ function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1' ) {
 
 /**
  * Return a best guess for text width in pixels.
- * 
+ *
+ * @since 0.0.1
+ *
  * @param string $text Text.
- * 
+ *
  * @return integer Guesstimate of text width in pixels.
  */
 function get_text_width( $text ) {
@@ -99,43 +113,62 @@ function get_text_width( $text ) {
 }
 
 /**
- * Retrieve from livecoding.tv or from cache 'livestreams.cached'.
+ * Retrieve channel online status from livecoding.tv or from cache 'livestreams.cached'.
  * Use cache for 120 seconds from retrieval time.
+ *
+ * @since 0.0.2
+ *
+ * @param string $channel name of channel to query.
+ *
+ * @return boolean is online or is offline.
  */
-if ( file_exists( 'livestreams.cached' ) ) {
-	$cached_time = filemtime( 'livestreams.cached' );
-} else {
-	$cached_time = false;
+
+function get_is_online( $channel ) {
+
+	if ( file_exists( 'livestreams.cached' ) ) {
+		$cached_time = filemtime( 'livestreams.cached' );
+	} else {
+		$cached_time = false;
+	}
+	if ( $cached_time === false || ( time() - $cached_time ) > 120 ) {
+
+		$ch = curl_init();
+		curl_setopt_array( $ch, array(
+			CURLOPT_URL            => "https://www.livecoding.tv/livestreams/",
+			CURLOPT_RETURNTRANSFER => true,
+		) );
+		$livestreams_html = curl_exec( $ch );
+		curl_close( $ch );
+
+		$fp = @fopen( 'livestreams.cached', 'w' );
+		@fwrite( $fp, $livestreams_html );
+		@fclose( $fp );
+
+	} else {
+
+		$fp = @fopen( 'livestreams.cached', 'r' );
+		$livestreams_html = @fread( $fp, filesize( 'livestreams.cached' ) );
+		@fclose( $fp );
+
+	}
+
+	/** Search for channel name. */
+	$needle = '/video/livestream/' . $channel . '/thumbnail' ;
+	$is_online = strpos( $livestreams_html, $needle ) !== false;
+
+	return $is_online ;
 }
-if ( $cached_time === false || ( time() - $cached_time ) > 120 ) {
 
-	$ch = curl_init();
-	curl_setopt_array( $ch, array(
-		CURLOPT_URL            => "https://www.livecoding.tv/livestreams/",
-		CURLOPT_RETURNTRANSFER => true,
-	) );
-	$livestreams_html = curl_exec( $ch );
-	curl_close( $ch );
 
-	$fp = @fopen( 'livestreams.cached', 'w' );
-	@fwrite( $fp, $livestreams_html );
-	@fclose( $fp );
-
-} else {
-
-	$fp = @fopen( 'livestreams.cached', 'r' );
-	$livestreams_html = @fread( $fp, filesize( 'livestreams.cached' ) );
-	@fclose( $fp );
-
-}
-
-/** Search for channel name. */
-$is_online = strpos( $livestreams_html, '/video/livestream/' . strtolower( $_GET['channel'] ) . '/thumbnail' );
+/** Fetch online status. */
+$is_online = (get_is_online(CHANNEL) !== false);
 
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
-if ( $is_online === false ) {
-	echo get_badge_svg( 'livecoding.tv', 'offline', '#e05d44' );
+if ( BADGE_STYLE == V2_IMAGE_STYLE ) {
+	echo file_get_contents( ( $is_online ) ? V2_ONLINE_SVG : V2_OFFLINE_SVG );
+} else if ( $is_online ) {
+	echo get_badge_svg_v1( 'livecoding.tv', 'streaming now', '#4c1' );
 } else {
-	echo get_badge_svg( 'livecoding.tv', 'streaming now', '#4c1' );
+	echo get_badge_svg_v1( 'livecoding.tv', 'offline', '#e05d44' );
 }
