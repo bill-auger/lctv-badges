@@ -530,18 +530,18 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.51770834"
-     inkscape:cx="613.92973"
+     inkscape:cx="429.46293"
      inkscape:cy="231.42294"
      inkscape:document-units="px"
-     inkscape:current-layer="g4870"
+     inkscape:current-layer="g4898"
      showgrid="false"
      width="300mm"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-width="1280"
-     inkscape:window-height="777"
+     inkscape:window-height="772"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="2"
      inkscape:window-maximized="1"
      inkscape:snap-global="true"
      inkscape:snap-bbox="true">
@@ -622,19 +622,23 @@
      inkscape:label="Offline hover"
      id="g4898"
      inkscape:groupmode="layer">
-    <flowRoot
-       transform="matrix(1.3827799,0,0,2.3044767,-225.9701,-200.33118)"
+    <text
+       xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4912)"
-       id="flowRoot4900"
-       xml:space="preserve"><flowRegion
-         id="flowRegion4902"><rect
-           y="54.33165"
-           x="558.22937"
-           height="322.57544"
-           width="990.90546"
-           id="rect4904" /></flowRegion><flowPara
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:180px;font-family:FreeMono;-inkscape-font-specification:FreeMono;fill:#ffffff"
-         id="flowPara4906">Offline</flowPara></flowRoot>  </g>
+       x="558.22852"
+       y="234.33203"
+       id="text4313"
+       sodipodi:linespacing="125%"
+       transform="matrix(1.3827799,0,0,2.3044767,-225.9701,-200.33118)"><tspan
+         sodipodi:role="line"
+         x="558.22852"
+         y="234.33203"
+         id="tspan4315"><tspan
+           x="558.22852"
+           y="234.33203"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:180px;font-family:FreeMono;-inkscape-font-specification:FreeMono;fill:#ffffff"
+           id="tspan4317">Offline</tspan></tspan></text>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
