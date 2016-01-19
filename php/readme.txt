@@ -5,6 +5,7 @@ License: GPLv3
 
 --------------------
 
+Requires PHP 5.4 or greater
 
 *** SETUP ***
 

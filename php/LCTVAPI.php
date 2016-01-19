@@ -308,7 +308,7 @@ class LCTVAPI {
 	 * @since 0.0.3
 	 * @access private
 	 */
-	private function get_url_contents( $url, $custom_header = [] ) {
+	private function get_url_contents( $url, $custom_header = array() ) {
 
 		$crl = curl_init();
 		curl_setopt( $crl, CURLOPT_HTTPHEADER, $custom_header );
@@ -328,7 +328,7 @@ class LCTVAPI {
 	 * @since 0.0.3
 	 * @access private
 	 */
-	private function post_url_contents( $url, $fields, $custom_header = [] ) {
+	private function post_url_contents( $url, $fields, $custom_header = array() ) {
 
 		$fields_string = '';
 		foreach( $fields as $key => $value ) {
