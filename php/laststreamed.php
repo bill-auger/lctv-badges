@@ -1,14 +1,14 @@
 <?php
 /**
- * Livecoding.tv Number of Followers Badges.
+ * Livecoding.tv Last Streamed Badges.
  *
- * Get the amount of followers for a user and return an appropriate svg image.
+ * Get the last video date and return an appropriate svg image.
  *
  * @param string channel (required) LCTV channel name.
  * @param string link    (optional) true/false to automatically link to channel.
  *
  * @package LCTVBadges\Badges
- * @since 0.0.3
+ * @since 0.0.4
  */
 
 /** Bail if no channel name. */
@@ -34,19 +34,12 @@ if ( ! $lctv_api->is_authorized() ) {
 	exit();
 }
 
-/** Get . */
-$api_request = $lctv_api->api_request( 'v1/user/followers/' );
+/** Get live streaming info for a channel. */
+$api_request = $lctv_api->api_request( 'v1/user/videos/latest/' );
 
 /** Bail on error. */
 if ( $api_request === false ) {
 	exit();
-}
-
-/** API returned an error. */
-if ( isset( $api_request->result->detail ) ) {
-	$follower_count = 0;
-} else {
-	$follower_count = count( $api_request->result );
 }
 
 /** Check to auto link. */
@@ -58,4 +51,8 @@ if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
 
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
-echo get_badge_svg( 'lctv followers', ' ' . $follower_count . ' ', '#4c1', $link );
+if ( is_array( $api_request->result ) && ! empty( $api_request->result[0]->creation_time ) ) {
+	echo get_badge_svg( 'lctv last streamed', date( 'M j, Y' ,strtotime( $api_request->result[0]->creation_time) ), '#4c1', $link );
+} else {
+	echo get_badge_svg( 'lctv last streamed', 'never', '#e05d44', $link );
+}

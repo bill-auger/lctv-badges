@@ -205,7 +205,7 @@ class LCTVAPI {
 			if ( empty( $this->user ) ) {
 				$this->user = $user->result->slug;
 			}
-			$this->data_store->put_data( $user->slug, 'token', $this->token );
+			$this->data_store->put_data( $user->result->slug, 'token', $this->token );
 		}
 
 	}
@@ -252,9 +252,11 @@ class LCTVAPI {
 	 * @since 0.0.3
 	 * @access public
 	 * 
-	 * @param string $api_path API endpoint. ex: 'v1/livestreams/'
+	 * @param string $api_path         API endpoint. ex: 'v1/livestreams/'
+	 * @param int    $cache_expires_in (optional) Override LCTVAPI_CACHE_EXPIRES_IN constant. Default: false
+	 * @param bool   $cache            (optional) True to cache result, false to not. Default: true
 	 */
-	public function api_request( $api_path ) {
+	public function api_request( $api_path, $cache_expires_in = false, $cache = true ) {
 
 		/** Check if we're authorized. */
 		if ( ! $this->is_authorized() ) {
@@ -269,8 +271,15 @@ class LCTVAPI {
 		/** Attempt to load API request from cache. */
 		$api_cache = $this->data_store->get_data( $this->user, $api_request_type );
 
+		/** Check for cache expire time override. */
+		if ( $cache_expires_in !== false ) {
+			$cache_check = $cache_expires_in;
+		} else {
+			$cache_check = LCTVAPI_CACHE_EXPIRES_IN;
+		}
+
 		/** Make API request call if we have no cache or if cache is expired. */
-		if ( ! isset( $api_cache->created_at ) || ( time() - $api_cache->created_at ) > LCTVAPI_CACHE_EXPIRES_IN ) {
+		if ( ! isset( $api_cache->created_at ) || ( time() - $api_cache->created_at ) > $cache_check ) {
 
 			$headers = array(
 				'Cache-Control: no-cache',
@@ -283,7 +292,9 @@ class LCTVAPI {
 			$api_cache = new stdClass();
 			$api_cache->result = json_decode( $api_ret, false );
 			$api_cache->created_at = time();
-			$this->data_store->put_data( $this->user, $api_request_type, $api_cache );
+			if ( $cache ) {
+				$this->data_store->put_data( $this->user, $api_request_type, $api_cache );
+			}
 
 		}
 

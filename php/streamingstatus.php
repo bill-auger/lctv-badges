@@ -7,6 +7,9 @@
  * @param string channel (required) LCTV channel name.
  * @param string online  (optional) Button message if status is streaming.
  * @param string offline (optional) Button message if status is not streaming.
+ * @param string title   (optional) true/false to show streaming title when live,
+ *                                  this will override the online message.
+ * @param string link    (optional) true/false to automatically link to channel.
  *
  * @package LCTVBadges\Badges
  * @since 0.0.3
@@ -18,11 +21,11 @@ if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 }
 
 /** Set the channel name. */
-define( 'CHANNEL', htmlspecialchars( strtolower( urldecode( $_GET['channel'] ) ) ) );
+$channel = strtolower( $_GET['channel'] );
 /** Set the online message. */
-define( 'ONLINE_MESSAGE', ( isset( $_GET['online'] ) && ! empty( $_GET['online'] ) ) ? htmlspecialchars( urldecode( $_GET['online'] ) ) : 'online' );
+$online_message = ( isset( $_GET['online'] ) && ! empty( $_GET['online'] ) ) ? $_GET['online'] : 'online';
 /** Set the offline message. */
-define( 'OFFLINE_MESSAGE', ( isset( $_GET['offline'] ) && ! empty( $_GET['offline'] ) ) ? htmlspecialchars( urldecode( $_GET['offline'] ) ) : 'offline' );
+$offline_message = ( isset( $_GET['offline'] ) && ! empty( $_GET['offline'] ) ) ? $_GET['offline'] : 'offline';
 
 /** Initialize. */
 require_once( 'lctv_badges_init.php' );
@@ -40,7 +43,7 @@ if ( ! $lctv_api->is_authorized() ) {
 }
 
 /** Get live streaming info for a channel. */
-$api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( CHANNEL ) . '/' );
+$api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( $channel ) . '/' );
 
 /** Bail on error. */
 if ( $api_request === false ) {
@@ -52,10 +55,24 @@ if ( isset( $api_request->result->detail ) ) {
 	$api_request->result->is_live = false;
 }
 
+/** Display live stream title instead of 'online'. */
+if ( isset( $_GET['title'] ) && strtolower( $_GET['title'] ) === 'true' ) {
+	if ( ! empty( $api_request->result->title ) ) {
+		$online_message = $api_request->result->title;
+	}
+}
+
+/** Check to auto link. */
+if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
+	$link = 'https://www.livecoding.tv/' . urlencode( $channel ) . '/';
+} else {
+	$link = '';
+}
+
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
 if ( $api_request->result->is_live ) {
-	echo get_badge_svg( 'livecoding.tv', ONLINE_MESSAGE, '#4c1' );
+	echo get_badge_svg( 'livecoding.tv', $online_message, '#4c1', $link );
 } else {
-	echo get_badge_svg( 'livecoding.tv', OFFLINE_MESSAGE, '#e05d44' );
+	echo get_badge_svg( 'livecoding.tv', $offline_message, '#e05d44', $link );
 }

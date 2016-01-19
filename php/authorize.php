@@ -25,7 +25,7 @@ $lctv_api = new LCTVAPI( array(
 		<title>LCTV Badges Authorization</title>
 	</head>
 	<body style="font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#111;">
-		<div style="padding:20px;width:500px;margin:0 auto;">
+		<div style="padding:20px;width:600px;margin:0 auto;">
 		<?php if ( ! $lctv_api->is_authorized() ) : ?>
 			<h1 style="font-size:24px;font-weight:400;">Authorize</h1>
 			<p>Some badges require access to your Livecoding.tv account information. Authorize account access with the link below.</p>

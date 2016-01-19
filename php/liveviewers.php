@@ -5,6 +5,7 @@
  * Get the amount of live viewers for a channel and return an appropriate svg image.
  *
  * @param string channel (required) LCTV channel name.
+ * @param string link    (optional) true/false to automatically link to channel.
  *
  * @package LCTVBadges\Badges
  * @since 0.0.3
@@ -16,7 +17,7 @@ if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 }
 
 /** Set the channel name. */
-define( 'CHANNEL', htmlspecialchars( strtolower( urldecode( $_GET['channel'] ) ) ) );
+$channel = strtolower( $_GET['channel'] );
 
 /** Initialize. */
 require_once( 'lctv_badges_init.php' );
@@ -34,7 +35,7 @@ if ( ! $lctv_api->is_authorized() ) {
 }
 
 /** Get live streaming info for a channel. */
-$api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( CHANNEL ) . '/' );
+$api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( $channel ) . '/' );
 
 /** Bail on error. */
 if ( $api_request === false ) {
@@ -47,10 +48,17 @@ if ( isset( $api_request->result->detail ) ) {
 	$api_request->result->viewers_live = 0;
 }
 
+/** Check to auto link. */
+if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
+	$link = 'https://www.livecoding.tv/' . urlencode( $channel ) . '/';
+} else {
+	$link = '';
+}
+
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
 if ( $api_request->result->is_live ) {
-	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#4c1' );
+	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#4c1', $link );
 } else {
-	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#e05d44' );
+	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#e05d44', $link );
 }

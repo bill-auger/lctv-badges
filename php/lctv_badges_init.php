@@ -18,7 +18,7 @@ define( 'LCTV_CLIENT_SECRET', getenv( 'LCTV_CLIENT_SECRET' ) );
 /** Set API redirect url. */
 define( 'LCTV_REDIRECT_URL', 'http://example.com/authorize.php' );
 /** Set master account name to access public api information. */
-define( 'LCTV_MASTER_USER', 'exampleuserslug' );
+define( 'LCTV_MASTER_USER', 'username' );
 /**
  * Set path for flat file data storage.
  * Default set in LCTVAPI.php: __DIR__
