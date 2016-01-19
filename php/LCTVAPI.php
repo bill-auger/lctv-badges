@@ -376,11 +376,11 @@ class LCTVAPIDataStoreFlatFiles {
 	 */
 	public function get_data( $user, $type ) {
 
-		if ( empty( $user ) || empty( $type ) || ! file_exists( LCTV_DATA_PATH . $user . '.' . $type ) ) {
+		if ( empty( $user ) || empty( $type ) || ! file_exists( LCTVAPI_DATA_PATH . $user . '.' . $type ) ) {
 			return false;
 		}
 
-		return json_decode( file_get_contents( LCTV_DATA_PATH . $user . '.' . $type ), false );
+		return json_decode( file_get_contents( LCTVAPI_DATA_PATH . $user . '.' . $type ), false );
 
 	}
 
@@ -405,7 +405,7 @@ class LCTVAPIDataStoreFlatFiles {
 			return false;
 		}
 
-		return file_put_contents( LCTV_DATA_PATH . $user . '.' . $type, json_encode( $data ) );
+		return file_put_contents( LCTVAPI_DATA_PATH . $user . '.' . $type, json_encode( $data ) );
 
 	}
 
@@ -429,10 +429,10 @@ class LCTVAPIDataStoreFlatFiles {
 		}
 
 		if ( strpos( $type, '*' ) !== false ) {
-			array_map( 'unlink', glob( LCTV_DATA_PATH . $user . '.' . $type ) );
+			array_map( 'unlink', glob( LCTVAPI_DATA_PATH . $user . '.' . $type ) );
 			return true;
 		} else {
-			return unlink( LCTV_DATA_PATH . $user . '.' . $type );
+			return unlink( LCTVAPI_DATA_PATH . $user . '.' . $type );
 		}
 
 	}

@@ -23,7 +23,7 @@ define( 'LCTV_MASTER_USER', 'username' );
  * Set path for flat file data storage.
  * Default set in LCTVAPI.php: __DIR__
  */
-//define( 'LCTV_DATA_PATH', __DIR__ . '/data/' );
+//define( 'LCTVAPI_DATA_PATH', __DIR__ . '/data/' );
 /**
  * Set cache expire time.
  * Default set in LCTVAPI.php: 300
