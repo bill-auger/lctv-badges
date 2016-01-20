@@ -40,17 +40,17 @@ function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1', $lin
 	return
 		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' . $width . '" height="20">' .
 			( ! empty( $link ) ? '<a xlink:href="' . $link . '">' : '' ) .
-			'<linearGradient id="smooth" x2="0" y2="100%">' .
+			'<linearGradient id="b" x2="0" y2="100%">' .
 				'<stop offset="0" stop-color="#bbb" stop-opacity=".1"/>' .
 				'<stop offset="1" stop-opacity=".1"/>' .
 			'</linearGradient>' .
-			'<mask id="round">' .
+			'<mask id="a">' .
 				'<rect width="' . $width . '" height="20" rx="3" fill="#fff"/>' .
 			'</mask>' .
-			'<g mask="url(#round)">' .
-				'<rect width="' . $width . '" height="20" fill="#555"/>' .
-				'<rect x="' . $right_color_start . '" width="' . $right_color_width . '" height="20" fill="' . $color . '"/>' .
-				'<rect width="' . $width . '" height="20" fill="url(#smooth)"/>' .
+			'<g mask="url(#a)">' .
+				'<path fill="#555" d="M0 0h' . ( $width - $right_color_width ) . 'v20H0z"/>' .
+				'<path fill="' . $color . '" d="M' . ( $width - $right_color_width ) . ' 0h' . $right_color_width . 'v20H' . ( $width - $right_color_width ) . 'z"/>' .
+				'<path fill="url(#b)" d="M0 0h' . $width . 'v20H0z"/>' .
 			'</g>' .
 			'<g fill="#fff" text-anchor="middle" font-family="Verdana,DejaVu Sans,Geneva,sans-serif" font-size="11">' .
 				'<text textLength="' . $left_text_width . '" lengthAdjust="spacing" x="' . $left_text_start . '" y="15" fill="#010101" fill-opacity=".3">' . $left_text . '</text>' .
