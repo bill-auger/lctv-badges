@@ -31,23 +31,23 @@ $lctv_api = new LCTVAPI( array(
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv followers', 'error', '#e05d44' );
 	exit();
 }
 
-/** Get . */
+/** Get user followers. */
 $api_request = $lctv_api->api_request( 'v1/user/followers/' );
 
 /** Bail on error. */
-if ( $api_request === false ) {
+if ( $api_request === false || isset( $api_request->result->detail ) ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv followers', 'error', '#e05d44' );
 	exit();
 }
 
-/** API returned an error. */
-if ( isset( $api_request->result->detail ) ) {
-	$follower_count = 0;
-} else {
-	$follower_count = count( $api_request->result );
-}
+/** Count number of followers. */
+$follower_count = count( $api_request->result );
 
 /** Check to auto link. */
 if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
@@ -58,4 +58,4 @@ if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
 
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
-echo get_badge_svg( 'lctv followers', ' ' . $follower_count . ' ', '#4c1', $link );
+echo get_badge_svg( 'lctv followers', $follower_count, '#4c1', $link );

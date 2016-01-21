@@ -39,6 +39,8 @@ $lctv_api = new LCTVAPI( array(
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'livecoding.tv', 'error', '#e05d44' );
 	exit();
 }
 
@@ -47,10 +49,12 @@ $api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( $channel )
 
 /** Bail on error. */
 if ( $api_request === false ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'livecoding.tv', 'error', '#e05d44' );
 	exit();
 }
 
-/** API returned an error. */
+/** API returned an error. This happens if user is not streaming. */
 if ( isset( $api_request->result->detail ) ) {
 	$api_request->result->is_live = false;
 }

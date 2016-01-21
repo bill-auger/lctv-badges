@@ -7,11 +7,11 @@
  * @author  andtrev
  * @license GPLv3
  * @package LCTVBadges
- * @version 0.0.4
+ * @version 0.0.5
  */
 
-/** Badge svg creator. */
-require_once( 'lctv_badges_svg.php' );
+/** Initialize. */
+require_once( 'lctv_badges_init.php' );
 
 ?>
 <!DOCTYPE html>
@@ -45,9 +45,12 @@ require_once( 'lctv_badges_svg.php' );
 				</ul>
 			</p>
 			<p>
-				<?php echo get_badge_svg( 'livecoding.tv', 'online', '#4c1' ); ?>
+				<img id="streamingstatus" src="streamingstatus.php?channel=<?php echo LCTV_MASTER_USER; ?>">
+			</p>
+			<p>
+				Enter a channel name and try it out:
 				<br>
-				<?php echo get_badge_svg( 'livecoding.tv', 'offline', '#e05d44' ); ?>
+				<input id="streamingstatuschannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('streamingstatus').src='streamingstatus.php?channel='+document.getElementById('streamingstatuschannel').value;">
 			</p>
 			<br><br>
 			<h2 style="font-size:20px;font-weight:400;">Live Viewers:</h2>
@@ -61,9 +64,13 @@ require_once( 'lctv_badges_svg.php' );
 				</ul>
 			</p>
 			<p>
-				<?php echo get_badge_svg( 'lctv viewers', '30', '#4c1' ); ?>
+				<img id="liveviewers" src="liveviewers.php?channel=<?php echo LCTV_MASTER_USER; ?>">
+			</p>
+			</p>
+			<p>
+				Enter a channel name and try it out:
 				<br>
-				<?php echo get_badge_svg( 'lctv viewers', '0', '#e05d44' ); ?>
+				<input id="liveviewerschannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('liveviewers').src='liveviewers.php?channel='+document.getElementById('liveviewerschannel').value;">
 			</p>
 			<br><br>
 			<h2 style="font-size:20px;font-weight:400;">Number of Followers:</h2>
@@ -78,7 +85,12 @@ require_once( 'lctv_badges_svg.php' );
 				Needs an <a href="authorize.php">authorized account</a> to function.
 			</p>
 			<p>
-				<?php echo get_badge_svg( 'lctv followers', '50', '#4c1' ); ?>
+				<img id="numberfollowers" src="numberfollowers.php?channel=<?php echo LCTV_MASTER_USER; ?>">
+			</p>
+			<p>
+				Enter a channel name and try it out:
+				<br>
+				<input id="numberfollowerschannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('numberfollowers').src='numberfollowers.php?channel='+document.getElementById('numberfollowerschannel').value;">
 			</p>
 			<br><br>
 			<h2 style="font-size:20px;font-weight:400;">Last Streamed:</h2>
@@ -93,9 +105,12 @@ require_once( 'lctv_badges_svg.php' );
 				Needs an <a href="authorize.php">authorized account</a> to function.
 			</p>
 			<p>
-				<?php echo get_badge_svg( 'lctv last streamed', 'Jan 1, 2016', '#4c1' ); ?>
+				<img id="laststreamed" src="laststreamed.php?channel=<?php echo LCTV_MASTER_USER; ?>">
+			</p>
+			<p>
+				Enter a channel name and try it out:
 				<br>
-				<?php echo get_badge_svg( 'lctv last streamed', 'never', '#e05d44' ); ?>
+				<input id="laststreamedchannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('laststreamed').src='laststreamed.php?channel='+document.getElementById('laststreamedchannel').value;">
 			</p>
 			<br><br>
 		</div>

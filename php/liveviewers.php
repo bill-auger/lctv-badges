@@ -31,6 +31,8 @@ $lctv_api = new LCTVAPI( array(
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv viewers', 'error', '#e05d44' );
 	exit();
 }
 
@@ -39,10 +41,12 @@ $api_request = $lctv_api->api_request( 'v1/livestreams/' . urlencode( $channel )
 
 /** Bail on error. */
 if ( $api_request === false ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv viewers', 'error', '#e05d44' );
 	exit();
 }
 
-/** API returned an error. */
+/** API returned an error. This happens if user is not streaming. */
 if ( isset( $api_request->result->detail ) ) {
 	$api_request->result->is_live = false;
 	$api_request->result->viewers_live = 0;
@@ -58,7 +62,7 @@ if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
 if ( $api_request->result->is_live ) {
-	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#4c1', $link );
+	echo get_badge_svg( 'lctv viewers', $api_request->result->viewers_live, '#4c1', $link );
 } else {
-	echo get_badge_svg( 'lctv viewers', ' ' . $api_request->result->viewers_live . ' ', '#e05d44', $link );
+	echo get_badge_svg( 'lctv viewers', $api_request->result->viewers_live, '#e05d44', $link );
 }

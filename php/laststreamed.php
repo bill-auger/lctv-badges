@@ -31,14 +31,18 @@ $lctv_api = new LCTVAPI( array(
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv last streamed', 'error', '#e05d44' );
 	exit();
 }
 
-/** Get live streaming info for a channel. */
+/** Get users latest videos. */
 $api_request = $lctv_api->api_request( 'v1/user/videos/latest/' );
 
 /** Bail on error. */
-if ( $api_request === false ) {
+if ( $api_request === false || isset( $api->request->detail ) ) {
+	header( "Content-type:image/svg+xml" );
+	echo get_badge_svg( 'lctv last streamed', 'error', '#e05d44' );
 	exit();
 }
 
