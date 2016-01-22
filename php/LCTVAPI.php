@@ -566,8 +566,9 @@ class LCTVAPIDataStoreMySQL {
 		if ( $id->num_rows == 0 ) {
 			$result = $this->db->query( "INSERT INTO `lctvapi_cache` (`id`, `user`, `type`, `data`) VALUES (NULL, '$user', '$type', '$data')" );
 		} else {
-			$result = $this->db->query( "UPDATE `lctvapi_cache` SET `data` = '$data' WHERE `id` = $id->fetch_object()->id" );
+			$result = $this->db->query( "UPDATE `lctvapi_cache` SET `data` = '$data' WHERE `id` = " . $this->db->real_escape_string( $id->fetch_object()->id ) );
 		}
+		$id->free();
 
 		if ( $result ) {
 			return strlen( $data );
