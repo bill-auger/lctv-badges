@@ -7,7 +7,7 @@
  * @author  andtrev
  * @license GPLv3
  * @package LCTVBadges
- * @version 0.0.5
+ * @version 0.0.6
  */
 
 /** Initialize. */
@@ -21,7 +21,7 @@ require_once( 'lctv_badges_init.php' );
 	</head>
 	<body style="font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#111;">
 		<div style="padding:20px;width:600px;margin:0 auto;">
-			<h1 style="font-size:24px;font-weight:400;">Livecoding.tv Badges</h1>
+			<h1 style="font-size:24px;font-weight:400;">Livecoding.tv Badges <span style="font-size:12px;">v0.0.6</span></h1>
 			<p>
 				usage:
 				<br>
@@ -116,4 +116,3 @@ require_once( 'lctv_badges_init.php' );
 		</div>
 	</body>
 </html>
-<?php

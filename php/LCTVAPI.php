@@ -11,11 +11,6 @@ if ( basename( __FILE__ ) == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
   exit();
 }
 
-/** Set path for flat file data store if not set. */
-if ( ! defined( 'LCTVAPI_DATA_PATH' ) ) {
-	define( 'LCTVAPI_DATA_PATH', __DIR__ );
-}
-
 /** Set cache expire time if not set. */
 if ( ! defined( 'LCTVAPI_CACHE_EXPIRES_IN' ) ) {
 	define( 'LCTVAPI_CACHE_EXPIRES_IN', 300 );
@@ -33,6 +28,8 @@ class LCTVAPI {
 	 * 
 	 * Used for authorization and token retrieval.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var string
 	 */
 	public $client_id = '';
@@ -42,6 +39,8 @@ class LCTVAPI {
 	 * 
 	 * Used for authorization and token retrieval.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var string
 	 */
 	public $client_secret = '';
@@ -51,6 +50,8 @@ class LCTVAPI {
 	 * 
 	 * Used for authorization code return from API.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var string URL.
 	 */
 	public $redirect_url = '';
@@ -60,6 +61,8 @@ class LCTVAPI {
 	 * 
 	 * Used to make API calls.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var stdClass|boolean
 	 */
 	public $token = false;
@@ -69,6 +72,8 @@ class LCTVAPI {
 	 * 
 	 * Used to define authorization scope.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var string
 	 */
 	public $scope = 'read read:user read:channel';
@@ -78,6 +83,8 @@ class LCTVAPI {
 	 * 
 	 * Used to identify the user token for API calls.
 	 * 
+	 * @since 0.0.3
+	 * @access public
 	 * @var string
 	 */
 	public $user = '';
@@ -87,6 +94,8 @@ class LCTVAPI {
 	 * 
 	 * Used to store, recall and delete data.
 	 * 
+	 * @since 0.0.3
+	 * @access private
 	 * @var string|data store object
 	 */
 	private $data_store = 'LCTVAPIDataStoreFlatFiles';
@@ -95,6 +104,7 @@ class LCTVAPI {
 	 * Constructor.
 	 *
 	 * Supplied $args override class property defaults.
+	 * Handle auth requests and token checks on instantiation.
 	 *
 	 * @since 0.0.3
 	 *
@@ -266,7 +276,7 @@ class LCTVAPI {
 		}
 
 		/** Setup api request type for data store. */
-		$api_request_type = str_replace( '/', '', $api_path );
+		$api_request_type = preg_replace( "/[^a-zA-Z0-9]+/", "", $api_path );
 
 		/** Attempt to load API request from cache. */
 		$api_cache = $this->data_store->get_data( $this->user, $api_request_type );
@@ -362,6 +372,20 @@ class LCTVAPI {
 class LCTVAPIDataStoreFlatFiles {
 
 	/**
+	 * Constructor.
+	 * 
+	 * @since 0.0.6
+	 */
+	 public function __construct() {
+
+		/** Set path for flat file data store if not set. */
+		if ( ! defined( 'LCTVAPI_DATA_PATH' ) ) {
+			define( 'LCTVAPI_DATA_PATH', __DIR__ );
+		}
+
+	 }
+
+	/**
 	 * Get data.
 	 * 
 	 * Data is always an object, and should be returned as an object.
@@ -434,6 +458,157 @@ class LCTVAPIDataStoreFlatFiles {
 		} else {
 			return unlink( LCTVAPI_DATA_PATH . $user . '.' . $type );
 		}
+
+	}
+
+}
+
+/**
+ * MySQL Data Store Class.
+ * 
+ * @since 0.0.6
+ */
+class LCTVAPIDataStoreMySQL {
+
+	/**
+	 * Database object.
+	 * 
+	 * @since 0.0.6
+	 * @access private
+	 * @var bool|database object
+	 */
+	 private $db = false;
+
+	/**
+	 * Constructor.
+	 * 
+	 * Handle database connection.
+	 * 
+	 * @since 0.0.6
+	 */
+	 public function __construct() {
+
+		/** Bail if no mysqli support or LCTVAPI_DB constants are not set. */
+		if ( ! function_exists( 'mysqli_connect' ) || ! defined( 'LCTVAPI_DB_NAME' ) || ! defined( 'LCTVAPI_DB_USER' ) ||
+			! defined( 'LCTVAPI_DB_HOST' ) || ! defined( 'LCTVAPI_DB_PASSWORD' ) ) {
+			return;
+		}
+
+		/** Connect to database. */
+		$this->db = new mysqli( LCTVAPI_DB_HOST, LCTVAPI_DB_USER, LCTVAPI_DB_PASSWORD, LCTVAPI_DB_NAME );
+		if ( $this->db->connect_errno ) {
+			$this->db = false;
+			return;
+		}
+
+		/** Create cache table if it doesn't exist. */
+		$this->db->query( "CREATE TABLE IF NOT EXISTS `lctvapi_cache` ( `id` BIGINT(20) NOT NULL auto_increment, `user` VARCHAR(255), `type` VARCHAR(255), `data` LONGTEXT, PRIMARY KEY (`id`), INDEX (`user`), INDEX (`type`) )" );
+
+	 }
+
+	/**
+	 * Get data.
+	 * 
+	 * Data is always an object, and should be returned as an object.
+	 *
+	 * @since 0.0.6
+	 * @access public
+	 * 
+	 * @param string $user User name/slug.
+	 * @param string $type Data type.
+	 * 
+	 * @return bool|stdClass False on failure, object on success.
+	 */
+	public function get_data( $user, $type ) {
+
+		if ( empty( $user ) || empty( $type ) || ! $this->db ) {
+			return false;
+		}
+
+		$user = $this->db->real_escape_string( $user );
+		$type = $this->db->real_escape_string( $type );
+		$result = $this->db->query( "SELECT `data` FROM `lctvapi_cache` WHERE `user` = '$user' AND `type` = '$type'" );
+		if ( $result->num_rows == 0 ) {
+			return false;
+		}
+		$data = $result->fetch_object();
+		$result->free();
+
+		return json_decode( $data->data, false );
+
+	}
+
+	/**
+	 * Put/store data.
+	 * 
+	 * Data is always an object. False should be returned on failure,
+	 * any other value will be considered a success.
+	 *
+	 * @since 0.0.6
+	 * @access public
+	 * 
+	 * @param string   $user User name/slug.
+	 * @param string   $type Data type.
+	 * @param stdClass $data Data object.
+	 * 
+	 * @return bool|int False on failure, id of entry stored on success.
+	 */
+	public function put_data( $user, $type, $data ) {
+
+		if ( empty( $user ) || empty( $type ) || empty( $data ) || ! $this->db ) {
+			return false;
+		}
+
+		$user = $this->db->real_escape_string( $user );
+		$type = $this->db->real_escape_string( $type );
+		$data = $this->db->real_escape_string( json_encode( $data ) );
+		$id = $this->db->query( "SELECT `id` FROM `lctvapi_cache` WHERE `user` = '$user' AND `type` = '$type'" );
+		if ( $id->num_rows == 0 ) {
+			$result = $this->db->query( "INSERT INTO `lctvapi_cache` (`id`, `user`, `type`, `data`) VALUES (NULL, '$user', '$type', '$data')" );
+		} else {
+			$result = $this->db->query( "UPDATE `lctvapi_cache` SET `data` = '$data' WHERE `id` = $id->fetch_object()->id" );
+		}
+
+		if ( $result ) {
+			return strlen( $data );
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Delete data.
+	 *
+	 * Data type ($type) may include a '*' wildcard to indicate all data.
+	 *
+	 * @since 0.0.6
+	 * @access public
+	 * 
+	 * @param string   $user User name/slug.
+	 * @param string   $type Data type.
+	 * 
+	 * @return bool False on failure, true on success.
+	 */
+	public function delete_data( $user, $type ) {
+
+		if ( empty( $user ) || empty( $type ) || ! $this->db ) {
+			return false;
+		}
+
+		$user = $this->db->real_escape_string( $user );
+		$type = $this->db->real_escape_string( $type );
+		if ( strpos( $type, '*' ) !== false ) {
+			$result = $this->db->query( "DELETE FROM `lctvapi_cache` WHERE `user` = '$user'" );
+		} else {
+			$result = $this->db->query( "DELETE FROM `lctvapi_cache` WHERE `user` = '$user' AND `type` = '$type'" );
+		}
+
+		if ( $result ) {
+			return true;
+		}
+
+		return false;
 
 	}
 

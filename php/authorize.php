@@ -11,6 +11,7 @@ require_once( 'lctv_badges_init.php' );
 
 /** Load the API with no user. */
 $lctv_api = new LCTVAPI( array(
+	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
 	'client_id'     => LCTV_CLIENT_ID,
 	'client_secret' => LCTV_CLIENT_SECRET,
 	'redirect_url'  => LCTV_REDIRECT_URL,

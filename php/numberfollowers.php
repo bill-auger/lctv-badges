@@ -24,6 +24,7 @@ require_once( 'lctv_badges_init.php' );
 
 /** Load the API. */
 $lctv_api = new LCTVAPI( array(
+	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
 	'client_id'     => LCTV_CLIENT_ID,
 	'client_secret' => LCTV_CLIENT_SECRET,
 	'user'          => $channel,
