@@ -2,7 +2,8 @@ LCTV Badges
 -----------
 
 License: GPLv3  
-Requires: PHP v5.4+
+Requires: PHP v5.4+  
+Version: 0.0.7
 
 #### SETUP
 

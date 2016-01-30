@@ -7,7 +7,7 @@
  * @author  andtrev
  * @license GPLv3
  * @package LCTVBadges
- * @version 0.0.6
+ * @version 0.0.7
  */
 
 /** Initialize. */
@@ -111,6 +111,25 @@ require_once( 'lctv_badges_init.php' );
 				Enter a channel name and try it out:
 				<br>
 				<input id="laststreamedchannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('laststreamed').src='laststreamed.php?channel='+document.getElementById('laststreamedchannel').value;">
+			</p>
+			<br><br>
+			<h2 style="font-size:20px;font-weight:400;">Next Stream:</h2>
+			<p><pre>nextstream.php?channel=channelname</pre></p>
+			<p>
+				options:
+				<br>
+				<ul>
+					<li><em>channel</em> (required) LCTV channel name.</li>
+					<li><em>link</em> (optional) true/false to automatically link to channel.</li>
+				</ul>
+			</p>
+			<p>
+				<img id="nextstream" src="nextstream.php?channel=<?php echo LCTV_MASTER_USER; ?>">
+			</p>
+			<p>
+				Enter a channel name and try it out:
+				<br>
+				<input id="nextstreamchannel" type="text"> <input type="submit" value="GO" onclick="document.getElementById('nextstream').src='nextstream.php?channel='+document.getElementById('nextstreamchannel').value;">
 			</p>
 			<br><br>
 		</div>
