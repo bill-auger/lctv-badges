@@ -3,9 +3,7 @@
 
   <p>LCTV Online Status Badge - shields.io pill</p>
 
-  <a id="MY_LCTV_CHANNEL_NAME">
-    <img id="lctv-online-status" width="100" height="24" />
-  </a>
+  <img id="lctv-status-img" id="MY_LCTV_CHANNEL_NAME" width="100" height="24" />
 
   <?php $SERVER_ROOT          = $_SERVER['HTTP_HOST'] ;           ?>
   <?php $SHIELDSIO_JS         = 'js/online-status-shieldsio.js' ; ?>
@@ -15,10 +13,8 @@
 
   <p>to use this badge on your website:
     <ol>
-      <li>add this A and IMG tag to your HTML
-        <pre>&lt;a id="YOUR_LCTV_CHANNEL_NAME"&gt;
-  &lt;img id="lctv-online-status" width="100" height="24" /&gt;
-&lt;/a&gt;</pre>
+      <li>add this IMG tag to your HTML
+        <pre>&lt;img id="lctv-status-img" id="MY_LCTV_CHANNEL_NAME" width="100" height="24" /&gt;</pre>
       </li>
       <li>include this SCRIPT tag
         <pre>&lt;script type="text/javascript" src="http://<?php echo $STATUS_SHIELDSIO_URL ; ?>"&gt;&lt;/script&gt;</pre>

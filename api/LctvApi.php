@@ -6,26 +6,25 @@
  * @since 0.0.3
  */
 
+define( 'CREDENTIALS_FILE', 'api/LctvApiCredentials.inc' );
+define( 'AUTHORIZE_FILE', 'api/authorize.php' );
+define( 'NOT_AUTHORIZED_MSG', 'This app is not yet authorized with the livecoding.tv API and no ' . CREDENTIALS_FILE . ' was found.  This file must exist in order to use this class.  You can create this file using ' . CREDENTIALS_FILE . '.example as a reference and then initialize the API by browsing to <a href="../' . AUTHORIZE_FILE . '">' . AUTHORIZE_FILE . '</a>.' );
+define( 'CONSTANT_UNDEFINED_MSG', 'This app is not yet authorized with the livecoding.tv API.  This constant must be defined in ' . CREDENTIALS_FILE . '.  Undefined constant: ' );
+define( 'MYSQL_UNSUPPORTED_MSG', 'The version of PHP on this system does not support MySql.  This is required to use the LCTVAPIDataStoreMySQL class.' );
 
-define( 'NOT_AUTHORIZED_MSG', 'This app is not yet authorized with the livecoding.tv API and no api/LctvApiCredentials.php was found. You create this file using api/LctvApiCredentials.php.example as a reference then browse to api/authorize.php before using this class.' );
-
-
-/** LCTV API Credentials. */
-if ( ! file_exists( '../api/LctvApiCredentials.php' ) ) {
-	die( NOT_AUTHORIZED_MSG );
-} else {
-	require( '../api/LctvApiCredentials.php' );
-}
 
 /** Check if script is accessed directly. */
 if ( basename( __FILE__ ) == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
   exit();
 }
 
-/** Set cache expire time if not set. */
-if ( ! defined( 'LCTVAPI_CACHE_EXPIRES_IN' ) ) {
-	define( 'LCTVAPI_CACHE_EXPIRES_IN', 300 );
+/** LCTV API Credentials. */
+if ( ! file_exists( '../' . CREDENTIALS_FILE ) ) {
+	die( NOT_AUTHORIZED_MSG );
+} else {
+	require( '../' . CREDENTIALS_FILE );
 }
+
 
 /**
  * Livecoding.tv API class.
@@ -33,6 +32,25 @@ if ( ! defined( 'LCTVAPI_CACHE_EXPIRES_IN' ) ) {
  * @since 0.0.3
  */
 class LCTVAPI {
+
+
+	/**
+	 * Throw execption if these constants are undefined.
+	 *
+	 * @since 0.0.8
+	 * @storage static
+	 * @access public
+	 */
+	public static function ValidateConstants( $constants ) {
+
+		foreach ($constants as $constant) {
+			if ( ! defined( $constant ) ) {
+				throw new Exception(CONSTANT_UNDEFINED_MSG . $constant, 1);
+			}
+		}
+
+	}
+
 
 	/**
 	 * App client id.
@@ -119,9 +137,9 @@ class LCTVAPI {
 	 *
 	 * @since 0.0.3
 	 *
-	 * @param array $args Arguments to override class property defaults.
+	 * @throws Exception            - If curl not accessible or if missing credentials
 	 */
-	function __construct( $args = array() ) {
+	function __construct() {
 
 		/** Check that curl is available. */
 		if ( ! function_exists( 'curl_version' ) ) {
@@ -136,6 +154,21 @@ class LCTVAPI {
 				$this->$key = $args[$key];
 			}
 		}
+
+		/** Throw execption if constants pertaining to this class are undefined . */
+		LCTVAPI::ValidateConstants(array(
+			'LCTVAPI_DATA_STORE_CLASS',
+			'LCTV_CLIENT_ID',
+			'LCTV_CLIENT_SECRET',
+			'LCTV_REDIRECT_URL',
+			'LCTV_MASTER_USER',
+		) );
+
+		$this->client_id     = LCTV_CLIENT_ID;
+		$this->client_secret = LCTV_CLIENT_SECRET;
+		$this->redirect_url  = LCTV_REDIRECT_URL;
+		$this->user          = LCTV_MASTER_USER;
+		$this->data_store    = LCTVAPI_DATA_STORE_CLASS;
 
 		/** Instatiate data store. */
 		$this->data_store = new $this->data_store();
@@ -168,6 +201,7 @@ class LCTVAPI {
 		$this->check_token();
 
 	}
+
 
 	/**
 	 * Check the token and get/refresh it if necessary.
@@ -389,12 +423,10 @@ class LCTVAPIDataStoreFlatFiles {
 	 */
 	 public function __construct() {
 
-		/** Set path for flat file data store if not set. */
-		if ( ! defined( 'LCTVAPI_DATA_PATH' ) ) {
-			define( 'LCTVAPI_DATA_PATH', __DIR__ );
-		}
+			/** Throw execption if constants pertaining to this class are undefined . */
+			LCTVAPI::ValidateConstants( array('LCTVAPI_DATA_PATH',) ) ;
 
-	 }
+		}
 
 	/**
 	 * Get data.
@@ -499,11 +531,18 @@ class LCTVAPIDataStoreMySQL {
 	 */
 	 public function __construct() {
 
-		/** Bail if no mysqli support or LCTVAPI_DB constants are not set. */
-		if ( ! function_exists( 'mysqli_connect' ) || ! defined( 'LCTVAPI_DB_NAME' ) || ! defined( 'LCTVAPI_DB_USER' ) ||
-			! defined( 'LCTVAPI_DB_HOST' ) || ! defined( 'LCTVAPI_DB_PASSWORD' ) ) {
-			return;
+		/** Bail if no mysqli support. */
+		if ( ! function_exists( 'mysqli_connect' ) ) {
+			throw new Exception(MYSQL_UNSUPPORTED_MSG, 1);
 		}
+
+		/** Throw execption if constants pertaining to this class are undefined . */
+		LCTVAPI::ValidateConstants(array(
+			'LCTVAPI_DB_HOST',
+			'LCTVAPI_DB_USER',
+			'LCTVAPI_DB_PASSWORD',
+			'LCTVAPI_DB_NAME',
+		) );
 
 		/** Connect to database. */
 		$this->db = new mysqli( LCTVAPI_DB_HOST, LCTVAPI_DB_USER, LCTVAPI_DB_PASSWORD, LCTVAPI_DB_NAME );

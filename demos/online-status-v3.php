@@ -28,7 +28,7 @@ StatusImg.style.height     = '24px' ;
 StatusImg.style.visibility = 'hidden' ;
 SubmitInput.onclick        = function()
 {
-  var channel_name       = ChannelInput.value ;
+  var channel_name          = ChannelInput.value ;
   StatusImg.dataset.channel = channel_name ;
 
   loadImages() ;

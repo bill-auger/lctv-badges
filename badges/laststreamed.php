@@ -20,20 +20,16 @@ if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 $channel = strtolower( $_GET['channel'] );
 
 /** Initialize. */
-require_once( 'lctv_badges_init.php' );
+require_once( '../api/LctvApi.php' );
+require_once( '../img/v1/lctv-badges-svg-v1.php' );
 
 /** Load the API. */
-$lctv_api = new LCTVAPI( array(
-	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
-	'client_id'     => LCTV_CLIENT_ID,
-	'client_secret' => LCTV_CLIENT_SECRET,
-	'user'          => $channel,
-) );
+$lctv_api = new LCTVAPI($channel);
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
 	header( "Content-type:image/svg+xml" );
-	echo get_badge_svg( 'lctv last streamed', 'error', '#e05d44' );
+	echo make_badge_svg_v1( 'lctv last streamed', 'error', '#e05d44' );
 	exit();
 }
 
@@ -43,7 +39,7 @@ $api_request = $lctv_api->api_request( 'v1/user/videos/latest/' );
 /** Bail on error. */
 if ( $api_request === false || isset( $api->request->detail ) ) {
 	header( "Content-type:image/svg+xml" );
-	echo get_badge_svg( 'lctv last streamed', 'error', '#e05d44' );
+	echo make_badge_svg_v1( 'lctv last streamed', 'error', '#e05d44' );
 	exit();
 }
 
@@ -57,7 +53,7 @@ if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
 if ( is_array( $api_request->result ) && ! empty( $api_request->result[0]->creation_time ) ) {
-	echo get_badge_svg( 'lctv last streamed', date( 'M j, Y' ,strtotime( $api_request->result[0]->creation_time) ), '#4c1', $link );
+	echo make_badge_svg_v1( 'lctv last streamed', date( 'M j, Y' ,strtotime( $api_request->result[0]->creation_time) ), '#4c1', $link );
 } else {
-	echo get_badge_svg( 'lctv last streamed', 'never', '#e05d44', $link );
+	echo make_badge_svg_v1( 'lctv last streamed', 'never', '#e05d44', $link );
 }

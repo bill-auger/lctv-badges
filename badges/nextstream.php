@@ -20,20 +20,16 @@ if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 $channel = strtolower( $_GET['channel'] );
 
 /** Initialize. */
-require_once( 'lctv_badges_init.php' );
+require_once( '../api/LctvApi.php' );
+require_once( '../img/v1/lctv-badges-svg-v1.php' );
 
 /** Load the API. */
-$lctv_api = new LCTVAPI( array(
-	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
-	'client_id'     => LCTV_CLIENT_ID,
-	'client_secret' => LCTV_CLIENT_SECRET,
-	'user'          => LCTV_MASTER_USER,
-) );
+$lctv_api = new LCTVAPI(LCTV_MASTER_USER);
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {
 	header( "Content-type:image/svg+xml" );
-	echo get_badge_svg( 'livecoding.tv', 'error', '#e05d44' );
+	echo make_badge_svg_v1( 'livecoding.tv', 'error', '#e05d44' );
 	exit();
 }
 
@@ -43,7 +39,7 @@ $api_request = $lctv_api->api_request( 'v1/scheduledbroadcast/?limit=500' );
 /** Bail on error. */
 if ( $api_request === false || isset( $api_request->result->detail ) ) {
 	header( "Content-type:image/svg+xml" );
-	echo get_badge_svg( 'livecoding.tv', 'error', '#e05d44' );
+	echo make_badge_svg_v1( 'livecoding.tv', 'error', '#e05d44' );
 	exit();
 }
 
@@ -67,7 +63,7 @@ if ( isset( $_GET['link'] ) && strtolower( $_GET['link'] ) === 'true' ) {
 /** Output svg image. */
 header( "Content-type:image/svg+xml" );
 if ( $next_stream ) {
-	echo get_badge_svg( 'next stream', date( 'M j @ g:i a', $next_stream ), '#4c1', $link );
+	echo make_badge_svg_v1( 'next stream', date( 'M j @ g:i a', $next_stream ), '#4c1', $link );
 } else {
-	echo get_badge_svg( 'next stream', 'no stream scheduled', '#e05d44', $link );
+	echo make_badge_svg_v1( 'next stream', 'no stream scheduled', '#e05d44', $link );
 }

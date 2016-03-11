@@ -2,31 +2,21 @@
 /**
  * Authorize Livecoding.tv accounts.
  *
- * @package LCTVBadges\Authorize
+ * @package LCTVAPI\Authorize
  * @since 0.0.3
  */
 
 /** Initialize. */
-require_once( 'lctv_badges_init.php' );
-/*
-define( 'LCTV_CLIENT_ID', getenv( 'LCTV_CLIENT_ID' ) );
-define( 'LCTV_CLIENT_SECRET', getenv( 'LCTV_CLIENT_SECRET' ) );
-define( 'LCTV_REDIRECT_URL', getenv( 'LCTV_REDIRECT_URL' ) );
-define( 'LCTV_MASTER_USER', 'bill-auger' );
-define( 'LCTVAPI_DATA_STORE_CLASS', 'LCTVAPIDataStoreFlatFiles' );
-define( 'LCTVAPI_DATA_PATH','/var/www/lctv/data/' );
-require_once( 'LCTVAPI.php' );
-require_once( 'lctv_badges_svg.php' );
-*/
+require( 'LctvApi.php' );
+
 
 /** Load the API with no user. */
-$lctv_api = new LCTVAPI( array(
-	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
-	'client_id'     => LCTV_CLIENT_ID,
-	'client_secret' => LCTV_CLIENT_SECRET,
-	'redirect_url'  => LCTV_REDIRECT_URL,
-	'user'          => '',
-) );
+try {
+	$lctv_api = new LCTVAPI();
+}
+catch(Exception $ex) {
+	die($ex->getMessage());
+}
 
 /** Authorization html output. */
 ?>
@@ -37,7 +27,7 @@ $lctv_api = new LCTVAPI( array(
 	</head>
 	<body style="font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#111;">
 
-
+// begin DEBUG
 <ul>constants
 <li><?php echo "client_id=" . LCTV_CLIENT_ID ?></li>
 <li><?php echo "client_secret=" . LCTV_CLIENT_SECRET ?></li>
@@ -71,7 +61,7 @@ $access_token = ((isset( $lctv_api->token) && isset( $lctv_api->token->access_to
 <li><?php echo "access_token=$access_token"; ?></li>
 <li><?php echo "LCTVAPI_DATA_PATH=" . LCTVAPI_DATA_PATH; ?></li>
 </ul>
-
+// end DEBUG
 
 		<div style="padding:20px;width:600px;margin:0 auto;">
 		<?php if ( ! $lctv_api->is_authorized() ) : ?>

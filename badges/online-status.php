@@ -109,21 +109,20 @@ $is_online = ( is_online( CHANNEL_NAME ) !== false );
 /* Output SVG image. */
 if ( BADGE_STYLE == V2_IMAGE_STYLE ) {
 
-
-	echo "bye";
 	$status_img_url = ( $is_online ) ? V2_ONLINE_PNG : V2_OFFLINE_PNG;
 	header( "Location: $status_img_url" );
-	echo "wtf";exit;
-
-
 
 } else if ( BADGE_STYLE == V3_IMAGE_STYLE ) {
+
 	header( "Content-type:image/svg+xml" );
 	echo file_get_contents( ( $is_online ) ? V3_ONLINE_SVG : V3_OFFLINE_SVG );
+
 } else /* if ( BADGE_STYLE == V1_IMAGE_STYLE ) */ {
+
 	$right_text  = ( $is_online ) ? 'LIVE' : 'offline' ;
 	$right_color = ( $is_online ) ? '#4c1' : '#e05d44' ;
 
 	header( "Content-type:image/svg+xml" );
 	echo make_badge_svg_v1( 'livecoding.tv', $right_text, $right_color );
+
 }

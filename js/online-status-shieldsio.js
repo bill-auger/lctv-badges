@@ -1,26 +1,24 @@
-/* LCTV online status badge - initial prototype using shields.io
+/* LCTV online status badge - shields.io pill
 
   to use this badge on your website:
 
-  1. add this A and IMG tag to your HTML
-       <a id="MY_LCTV_CHANNEL_NAME" class="lctv-badge-a">
-         <img id="lctv-online-status" class="lctv-badge-img" width="100" height="24" />
-       </a>
+  1. add this IMG tag to your HTML
+       <img id="lctv-status-img" id="MY_LCTV_CHANNEL_NAME" width="100" height="24" />
   2. include this SCRIPT tag
-       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status/online-status-shieldsio.js"></script>
+       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status-shieldsio.js"></script>
 */
 
 
-var BADGE_IMG_ID     = 'lctv-online-status' ;
+var STATUS_IMG_ID    = 'lctv-status-img' ;
+var STATUS_A_ID      = 'lctv-status-a' ;
 var LCTV_URL         = "https://www.livecoding.tv/" ;
 var LCTV_API_URL     = "https://www.livecoding.tv/livestreams/" ;
 var SHIELDSIO_URL    = "https://img.shields.io/badge" ;
 var XHR_STATUS_READY = 4 ;
 
-var BadgeImg    = document.getElementById(BADGE_IMG_ID) ;
-var BadgeA      = BadgeImg.parentNode ;
-var ChannelName = BadgeA.id ;
-BadgeA.href     = LCTV_URL + ChannelName ;
+var StatusImg   = document.getElementById(STATUS_IMG_ID) ;
+var StatusA     = document.createElement('a') ;
+var ChannelName = StatusImg.dataset.channel ;
 
 
 function getStatus()
@@ -45,8 +43,14 @@ function parseJSON(xhr)
 
 function createBadge(is_online)
 {
+  StatusA.id   = STATUS_A_ID ;
+  StatusA.href = LCTV_URL + ChannelName ;
+
+  StatusImg.parentNode.replaceChild(StatusA , StatusImg) ;
+  StatusA             .appendChild(StatusImg) ;
+
   var status   = (is_online) ? "Online-green" : "Offline-red" ;
-  BadgeImg.src = SHIELDSIO_URL + "/LCTV-" + status + ".svg" ;
+  StatusImg.src = SHIELDSIO_URL + "/LCTV-" + status + ".svg" ;
 }
 
 

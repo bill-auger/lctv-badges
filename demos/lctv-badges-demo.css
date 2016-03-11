@@ -1,3 +1,6 @@
 body   { background-color: #111 ; color: #fff ; }
 li     { margin-bottom: 15px ; }
 li pre { background-color: #000 ; color: #fff ; border: 1px solid #fff ; padding: 15px ; }
+
+
+#demos-table td { padding: 5px 15px 5px 15px ; }

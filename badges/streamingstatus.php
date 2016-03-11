@@ -17,15 +17,15 @@
 
 
 /** LCTV API */
-require_once( 'LctvApi.php' );
+require_once( '../api/LctvApi.php' );
 /** Badge v1-svg creator. */
-require_once( '../img/lctv-badges-svg-v1.php' );
+require_once( '../img/v1//lctv-badges-svg-v1.php' );
 
 
 /** Bail if no channel name. */
 if ( ! isset( $_GET['channel'] ) || empty( $_GET['channel'] ) ) {
 	exit();
-}v1v1-v1
+}
 
 /** Set the channel name. */
 $channel = strtolower( $_GET['channel'] );
@@ -35,12 +35,7 @@ $online_message = ( isset( $_GET['online'] ) && ! empty( $_GET['online'] ) ) ? $
 $offline_message = ( isset( $_GET['offline'] ) && ! empty( $_GET['offline'] ) ) ? $_GET['offline'] : 'offline';
 
 /** Load the API. */
-$lctv_api = new LCTVAPI( array(
-	'data_store'    => LCTVAPI_DATA_STORE_CLASS,
-	'client_id'     => LCTV_CLIENT_ID,
-	'client_secret' => LCTV_CLIENT_SECRET,
-	'user'          => LCTV_MASTER_USER,
-) );
+$lctv_api = new LCTVAPI(LCTV_MASTER_USER);
 
 /** Bail if API isn't authorized. */
 if ( ! $lctv_api->is_authorized() ) {

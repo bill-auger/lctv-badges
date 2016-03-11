@@ -1,11 +1,11 @@
-/* LCTV online status badge - initial custom prototype
+/* LCTV online status badge - LCTV branded pill
 
   to use this badge on your website:
 
-  1. add this A and IMG tag to your HTML
+  1. add this IMG tag to your HTML
        <img id="lctv-status-img" id="MY_LCTV_CHANNEL_NAME" width="100" height="24" />
   2. include this SCRIPT tag
-       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status/online-status.js"></script>
+       <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status-v2.js"></script>
 */
 
 
