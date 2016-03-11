@@ -1,7 +1,7 @@
 <?php
 /**
  * Create svg badges.
- * 
+ *
  * @package LCTVBadges\BadgesSVG
  * @since 0.0.3
  */
@@ -24,7 +24,7 @@ if ( basename( __FILE__ ) == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
  *
  * @return string An svg image.
  */
-function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1', $link = '' ) {
+function make_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1', $link = '' ) {
 
 	$left_text = sanitize_svg_text( $left_text );
 	$right_text = sanitize_svg_text( $right_text );
@@ -65,7 +65,7 @@ function get_badge_svg( $left_text = '', $right_text = '', $color = '#4c1', $lin
 
 /**
  * Return a best guess for text width in pixels.
- * 
+ *
  * Be sure to pass text through the sanitize_svg_text function first.
  *
  * @since 0.0.1
@@ -94,11 +94,11 @@ function get_text_width( $svg_text ) {
 
 /**
  * Sanitize text to allow only certain characters.
- * 
+ *
  * @since 0.0.4
- * 
+ *
  * @param string $svg_text Text.
- * 
+ *
  * @return string Sanitized text.
  */
 function sanitize_svg_text( $svg_text ) {

@@ -9,7 +9,6 @@
   2. include this SCRIPT tag
        <script type="text/javascript" src="https://bill-auger.github.io/lctv-badges/js/online-status/online-status-shieldsio.js"></script>
 */
-console.log("online-status-shieldsio.js:IN") ;
 
 
 var BADGE_IMG_ID     = 'lctv-online-status' ;
@@ -26,10 +25,6 @@ BadgeA.href     = LCTV_URL + ChannelName ;
 
 function getStatus()
 {
-console.log("online-status-shieldsio.js:getStatus() ChannelName=" + ChannelName) ;
-// var stats_url = LCTV_API_URL + ChannelName + "/stats.json" ;
-// e.g. {"views_live": 4, "item_class": "livestream", "views_overall": 6958}
-
   var xhr        = new XMLHttpRequest() ;
   var status_url = LCTV_API_URL ;
 
@@ -45,8 +40,6 @@ function parseJSON(xhr)
 
   var is_online = !!(~xhr.responseText.indexOf("/video/livestream/" + ChannelName + "/thumbnail")) ;
 
-console.log("online-status-shieldsio.js:parseJSON() is_online=" + is_online) ;
-
   createBadge(is_online) ;
 }
 
@@ -54,8 +47,6 @@ function createBadge(is_online)
 {
   var status   = (is_online) ? "Online-green" : "Offline-red" ;
   BadgeImg.src = SHIELDSIO_URL + "/LCTV-" + status + ".svg" ;
-
-console.log("online-status-shieldsio.js:OUT") ;
 }
 
 

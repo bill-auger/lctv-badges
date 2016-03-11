@@ -1,10 +1,21 @@
 <?php
 /**
  * Livecoding.tv API.
- * 
- * @package LCTVBadges\LCTVAPI
+ *
+ * @package LCTVAPI\LCTVAPI
  * @since 0.0.3
  */
+
+
+define( 'NOT_AUTHORIZED_MSG', 'This app is not yet authorized with the livecoding.tv API and no api/LctvApiCredentials.php was found. You create this file using api/LctvApiCredentials.php.example as a reference then browse to api/authorize.php before using this class.' );
+
+
+/** LCTV API Credentials. */
+if ( ! file_exists( '../api/LctvApiCredentials.php' ) ) {
+	die( NOT_AUTHORIZED_MSG );
+} else {
+	require( '../api/LctvApiCredentials.php' );
+}
 
 /** Check if script is accessed directly. */
 if ( basename( __FILE__ ) == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
@@ -25,9 +36,9 @@ class LCTVAPI {
 
 	/**
 	 * App client id.
-	 * 
+	 *
 	 * Used for authorization and token retrieval.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var string
@@ -36,9 +47,9 @@ class LCTVAPI {
 
 	/**
 	 * App client secret.
-	 * 
+	 *
 	 * Used for authorization and token retrieval.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var string
@@ -47,9 +58,9 @@ class LCTVAPI {
 
 	/**
 	 * Redirect url after livecoding.tv authorization.
-	 * 
+	 *
 	 * Used for authorization code return from API.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var string URL.
@@ -58,9 +69,9 @@ class LCTVAPI {
 
 	/**
 	 * Token.
-	 * 
+	 *
 	 * Used to make API calls.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var stdClass|boolean
@@ -69,9 +80,9 @@ class LCTVAPI {
 
 	/**
 	 * Scope.
-	 * 
+	 *
 	 * Used to define authorization scope.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var string
@@ -80,9 +91,9 @@ class LCTVAPI {
 
 	/**
 	 * User name/slug.
-	 * 
+	 *
 	 * Used to identify the user token for API calls.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access public
 	 * @var string
@@ -91,9 +102,9 @@ class LCTVAPI {
 
 	/**
 	 * Data store.
-	 * 
+	 *
 	 * Used to store, recall and delete data.
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @access private
 	 * @var string|data store object
@@ -261,7 +272,7 @@ class LCTVAPI {
 	 *
 	 * @since 0.0.3
 	 * @access public
-	 * 
+	 *
 	 * @param string $api_path         API endpoint. ex: 'v1/livestreams/'
 	 * @param int    $cache_expires_in (optional) Override LCTVAPI_CACHE_EXPIRES_IN constant. Default: false
 	 * @param bool   $cache            (optional) True to cache result, false to not. Default: true
@@ -373,7 +384,7 @@ class LCTVAPIDataStoreFlatFiles {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @since 0.0.6
 	 */
 	 public function __construct() {
@@ -387,15 +398,15 @@ class LCTVAPIDataStoreFlatFiles {
 
 	/**
 	 * Get data.
-	 * 
+	 *
 	 * Data is always an object, and should be returned as an object.
 	 *
 	 * @since 0.0.3
 	 * @access public
-	 * 
+	 *
 	 * @param string $user User name/slug.
 	 * @param string $type Data type.
-	 * 
+	 *
 	 * @return bool|stdClass False on failure, object on success.
 	 */
 	public function get_data( $user, $type ) {
@@ -410,17 +421,17 @@ class LCTVAPIDataStoreFlatFiles {
 
 	/**
 	 * Put/store data.
-	 * 
+	 *
 	 * Data is always an object. False should be returned on failure,
 	 * any other value will be considered a success.
 	 *
 	 * @since 0.0.3
 	 * @access public
-	 * 
+	 *
 	 * @param string   $user User name/slug.
 	 * @param string   $type Data type.
 	 * @param stdClass $data Data object.
-	 * 
+	 *
 	 * @return bool|int False on failure, number of bytes written on success.
 	 */
 	public function put_data( $user, $type, $data ) {
@@ -440,10 +451,10 @@ class LCTVAPIDataStoreFlatFiles {
 	 *
 	 * @since 0.0.3
 	 * @access public
-	 * 
+	 *
 	 * @param string   $user User name/slug.
 	 * @param string   $type Data type.
-	 * 
+	 *
 	 * @return bool False on failure, true on success.
 	 */
 	public function delete_data( $user, $type ) {
@@ -465,14 +476,14 @@ class LCTVAPIDataStoreFlatFiles {
 
 /**
  * MySQL Data Store Class.
- * 
+ *
  * @since 0.0.6
  */
 class LCTVAPIDataStoreMySQL {
 
 	/**
 	 * Database object.
-	 * 
+	 *
 	 * @since 0.0.6
 	 * @access private
 	 * @var bool|database object
@@ -481,9 +492,9 @@ class LCTVAPIDataStoreMySQL {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * Handle database connection.
-	 * 
+	 *
 	 * @since 0.0.6
 	 */
 	 public function __construct() {
@@ -508,15 +519,15 @@ class LCTVAPIDataStoreMySQL {
 
 	/**
 	 * Get data.
-	 * 
+	 *
 	 * Data is always an object, and should be returned as an object.
 	 *
 	 * @since 0.0.6
 	 * @access public
-	 * 
+	 *
 	 * @param string $user User name/slug.
 	 * @param string $type Data type.
-	 * 
+	 *
 	 * @return bool|stdClass False on failure, object on success.
 	 */
 	public function get_data( $user, $type ) {
@@ -540,17 +551,17 @@ class LCTVAPIDataStoreMySQL {
 
 	/**
 	 * Put/store data.
-	 * 
+	 *
 	 * Data is always an object. False should be returned on failure,
 	 * any other value will be considered a success.
 	 *
 	 * @since 0.0.6
 	 * @access public
-	 * 
+	 *
 	 * @param string   $user User name/slug.
 	 * @param string   $type Data type.
 	 * @param stdClass $data Data object.
-	 * 
+	 *
 	 * @return bool|int False on failure, id of entry stored on success.
 	 */
 	public function put_data( $user, $type, $data ) {
@@ -585,10 +596,10 @@ class LCTVAPIDataStoreMySQL {
 	 *
 	 * @since 0.0.6
 	 * @access public
-	 * 
+	 *
 	 * @param string   $user User name/slug.
 	 * @param string   $type Data type.
-	 * 
+	 *
 	 * @return bool False on failure, true on success.
 	 */
 	public function delete_data( $user, $type ) {
