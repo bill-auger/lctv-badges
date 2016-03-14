@@ -1,7 +1,0 @@
-# Wapaca API wrapper
-#php/livestreams.cached
-
-# andtrev API wrapper
-api/LctvApiCredentials.inc
-api/tokens/
-api/.htaccess

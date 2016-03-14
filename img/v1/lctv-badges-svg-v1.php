@@ -16,15 +16,15 @@ if ( basename( __FILE__ ) == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
  *
  * @since 0.0.1
  *
- * @param string $left_text  Text to display on the left side of the button.
- * @param string $right_text Text to display on the right side of the button.
- * @param string $color      Hexidecimal (or other HTML acceptable color) for
- *                           right side of the button.
- * @param string $link       URL to link to in svg image.
+ * @param string $left_text  - Text to display on the left side of the button.
+ * @param string $right_text - Text to display on the right side of the button.
+ * @param string $color      - Hexidecimal (or other HTML acceptable color) for
+ *                                right side of the button.
+ * @param string $link_url   - LCTV channel page to wrap svg image as hyperlink.
  *
  * @return string An svg image.
  */
-function make_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1', $link = '' ) {
+function make_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1', $link_url = '' ) {
 
 	$left_text = sanitize_svg_text( $left_text );
 	$right_text = sanitize_svg_text( $right_text );
@@ -36,10 +36,11 @@ function make_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1', 
 	$right_color_width = $width - $left_text_width - 11;
 	$left_text_start = ( $left_text_width / 2 ) + 6;
 	$right_text_start = $width - ( $right_text_width / 2 ) - 6;
+  $wrap_in_a = ! empty( $link_url );
 
 	return
 		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' . $width . '" height="20">' .
-			( ! empty( $link ) ? '<a xlink:href="' . $link . '">' : '' ) .
+			( ( $wrap_in_a ) ? '<a xlink:href="' . $link_url . '">' : '' ) .
 			'<linearGradient id="b" x2="0" y2="100%">' .
 				'<stop offset="0" stop-color="#bbb" stop-opacity=".1"/>' .
 				'<stop offset="1" stop-opacity=".1"/>' .
@@ -58,7 +59,7 @@ function make_badge_svg_v1( $left_text = '', $right_text = '', $color = '#4c1', 
 				'<text textLength="' . $right_text_width . '" lengthAdjust="spacing" x="' . $right_text_start . '" y="15" fill="#010101" fill-opacity=".3">' . $right_text . '</text>' .
 				'<text textLength="' . $right_text_width . '" lengthAdjust="spacing" x="' . $right_text_start . '" y="14">' . $right_text . '</text>' .
 			'</g>' .
-			( ! empty( $link ) ? '</a>' : '' ) .
+			( ( $wrap_in_a ) ? '</a>' : '' ) .
 		'</svg>';
 
 }

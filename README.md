@@ -2,23 +2,37 @@
 
 *HTML badges and link buttons for LCTV online status and stream stats*
 
-<table id="demos-table">
-  <tr><th colspan="4">online status badges</th></tr>
-  <tr><td>shields.io pill</td>
-      <td><img src="https://img.shields.io/badge/LCTV-Online-green.svg" width="100" height="24" /></td>
-      <td><img src="https://img.shields.io/badge/LCTV-Offline-red.svg"  width="100" height="24" /></td>
-      <td><a href="https://bill-auger.github.io/lctv-badges/demos/online-status-shieldsio.php">click here for embed code</a></td></tr>
-  <tr><td>customizable SVG pill</td>
-      <td>(see demo)</td>
-      <td>(see demo)</td>
-      <td><a href="https://bill-auger.github.io/lctv-badges/demos/online-status-v1.php">click here for embed code</a></td></tr>
-  <tr><td>LCTV branded pill</td>
-      <td><img src="https://bill-auger.github.io/lctv-badges/img/v2/lctv-online.png" /></td>
-      <td><img src="https://bill-auger.github.io/lctv-badges/img/v2/lctv-offline.png" /></td>
-      <td><a href="https://bill-auger.github.io/lctv-badges/demos/online-status-v2.php">click here for embed code</a></td></tr>
-  <tr><td>SVG glassy</td>
-      <td><img src="https://bill-auger.github.io/lctv-badges/img/v3/lctv-online.svg"  width="100" height="24" /></td>
-      <td><img src="https://bill-auger.github.io/lctv-badges/img/v3/lctv-offline.svg" width="100" height="24" /></td>
-      <td><a href="https://bill-auger.github.io/lctv-badges/demos/online-status-v3.php">click here for embed code</a></td></tr>
-</table>
-<p>more styles and features to come once the LCTV REST API is finalized - feel free to post any comments or suggestions to the <a href="https://github.com/bill-auger/lctv-badges/issues">github issue tracker</a></p>
+  <p>HTML badges and link buttons for LCTV online status and stream stats</p>
+  <table id="demos-table">
+    <tr><th colspan="4">Online Status Badges                             </th></tr>
+    <tr><td>Logo Pill                                                    </td>
+        <td><img src="img/v2/lctv-online.png"                          /></td>
+        <td><img src="img/v2/lctv-offline.png"                         /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Online%20Status%20-%20Logo%20Pill&badge-style=online-status-v2">click here for embed code</a></td></tr>
+    <tr><td>SVG Glassy                                                   </td>
+        <td><img src="img/v3/faux-online.png"  width="100" height="24" /></td>
+        <td><img src="img/v3/faux-offline.png" width="100" height="24" /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo.php?title=Online%20Status%20-%20SVG%20Glassy&badge-style=online-status-v3">click here for embed code</a></td></tr>
+    <tr><td>Customizable SVG Pill                                        </td>
+        <td><img src="img/v1/faux-online.png"                          /></td>
+        <td><img src="img/v1/faux-offline.png"                         /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Online%20Status%20-%20Customizable%20SVG%20Pill&badge-style=online-status-v1">click here for embed code</a></td></tr>
+    <tr><th colspan="4">Number of Viewers Badges                         </th></tr>
+    <tr><td>Customizable SVG Pill                                        </td>
+        <td colspan="2"><img src="img/v1/faux-n-viewers.png"           /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Number%20of%20Viewers%20-%20Customizable%20SVG%20Pill&badge-style=n-viewers-v1">click here for embed code</a></td></tr>
+    <tr><th colspan="4">Number of Followers Badges                       </th></tr>
+    <tr><td>Customizable SVG Pill                                        </td>
+        <td colspan="2"><img src="img/v1/faux-n-followers.png"         /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Number%20of%20Followers%20-%20Customizable%20SVG%20Pill&badge-style=n-followers-v1">click here for embed code</a></td></tr>
+    <tr><th colspan="4">Last Streamed Badges                             </th></tr>
+    <tr><td>Customizable SVG Pill                                        </td>
+        <td colspan="2"><img src="img/v1/faux-last-stream.png"         /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Last%20Stream%20-%20Customizable%20SVG%20Pill&badge-style=last-stream-v1">click here for embed code</a></td></tr>
+    <tr><th colspan="4">Next Stream Badges                               </th></tr>
+    <tr><td>Customizable SVG Pill                                        </td>
+        <td colspan="2"><img src="img/v1/faux-next-stream.png"         /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/workspace/lctv-badges/demos/demo-nojs.php?title=Next%20Stream%20-%20Customizable%20SVG%20Pill&badge-style=next-stream-v1">click here for embed code</a></td></tr>
+  </table>
+
+more styles and features to come once the LCTV REST API is finalized - feel free to post any comments or suggestions to the [issue tracker](https://github.com/bill-auger/lctv-badges/issues)
