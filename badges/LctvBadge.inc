@@ -116,8 +116,10 @@ abstract class LctvBadge
     * @since 0.0.8
     *
     * @param array $params - user supplied badge styling parameters set to instance vars.
+    *                   ->auth_user:    (Optional) livecoding.tv user with which to authenticate for API request.
+    *                   ->badge_style:  (Optional) Badge style to return.
     *                   ->channel_name: (Required) Name of channel for which to fetch data.
-    *                   ->link_ur:      (Optional) true/false to wrap image in hyperlink to channel.
+    *                   ->link_url:     (Optional) true/false to wrap image in hyperlink to channel.
     *                   ->use_title:    (Optional) true/false to show streaming title when live. (Overrides online message.)
     *                   ->online_text:  (Optional) Badge message if status is streaming.
     *                   ->offline_text: (Optional) Badge message if status is not streaming.

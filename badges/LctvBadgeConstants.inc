@@ -1,17 +1,18 @@
 <?php
 
-define('BADGES_ROOT'  , $_SERVER['HTTP_HOST']   . '/workspace/lctv-badges' ) ;
-define('BADGES_URL'   , 'http://' . BADGES_ROOT . '/badges'             ) ;
-define('BADGE_JS_URL' , 'http://' . BADGES_ROOT . '/js/online-status.js') ;
-define('LCTV_URL'     , 'https://www.livecoding.tv'                               ) ;
+define('PATH_FROM_ROOT' , '' /* if badges are not served from web root */ ) ;
+define('BADGES_ROOT'    , $_SERVER['HTTP_HOST']   . PATH_FROM_ROOT        ) ;
+define('BADGES_URL'     , 'http://' . BADGES_ROOT . '/badges'             ) ;
+define('BADGE_JS_URL'   , 'http://' . BADGES_ROOT . '/js/online-status.js') ;
+define('LCTV_URL'       , 'https://www.livecoding.tv'                     ) ;
 
 // request param keys
 define('CHANNEL_KEY' , 'channel') ;
-define('STYLE_KEY'   , 'style') ;
-define('ONLINE_KEY'  , 'online') ;
+define('STYLE_KEY'   , 'style'  ) ;
+define('ONLINE_KEY'  , 'online' ) ;
 define('OFFLINE_KEY' , 'offline') ;
-define('TITLE_KEY'   , 'title') ;
-define('LINK_KEY'    , 'link') ;
+define('TITLE_KEY'   , 'title'  ) ;
+define('LINK_KEY'    , 'link'   ) ;
 
 // badge styles
 define('STATUS_V1_STYLE'        , 'online-status-v1'       ) ;
