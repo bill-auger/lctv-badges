@@ -36,12 +36,12 @@ $BADGE_V3_STYLES = array( STATUS_V3_STYLE        , STATUS_V3_HOVER_STYLE ,
 // image files
 define('V2_ONLINE_PNG'         , '../img/v2/lctv-online.png'        ) ;
 define('V2_OFFLINE_PNG'        , '../img/v2/lctv-offline.png'       ) ;
-define('V3_ONLINE_SVG'         , '../img/v3/lctv-online.svg'        ) ;
-define('V3_ONLINE_HOVER_SVG'   , '../img/v3/lctv-online-hover.svg'  ) ;
-define('V3_ONLINE_PUSHED_SVG'  , '../img/v3/lctv-online-pushed.svg' ) ;
-define('V3_OFFLINE_SVG'        , '../img/v3/lctv-offline.svg'       ) ;
-define('V3_OFFLINE_HOVER_SVG'  , '../img/v3/lctv-offline-hover.svg' ) ;
-define('V3_OFFLINE_PUSHED_SVG' , '../img/v3/lctv-offline-pushed.svg') ;
+define('V3_ONLINE_PNG'         , '../img/v3/lctv-online.png'        ) ;
+define('V3_ONLINE_HOVER_PNG'   , '../img/v3/lctv-online-hover.png'  ) ;
+define('V3_ONLINE_PUSHED_PNG'  , '../img/v3/lctv-online-pushed.png' ) ;
+define('V3_OFFLINE_PNG'        , '../img/v3/lctv-offline.png'       ) ;
+define('V3_OFFLINE_HOVER_PNG'  , '../img/v3/lctv-offline-hover.png' ) ;
+define('V3_OFFLINE_PUSHED_PNG' , '../img/v3/lctv-offline-pushed.png') ;
 
 // badge params
 define('GREEN_COLOR' , '#4c1'   ) ;

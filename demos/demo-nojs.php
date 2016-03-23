@@ -201,16 +201,15 @@ function makeBadgeUrl()
 
 function setEmbedCode()
 {
-  var badge_url    = makeBadgeUrl() ;
-  var channel_name = getChannelName() ;
-  var img_params   = (!IS_V1_STYLE) ? 'width="100" height="24"' : "" ;
+  var badge_url   = makeBadgeUrl() ;
+  var channel_url = LCTV_URL + getChannelName() ;
+  var img_params  = 'width="100" height="24"' ;
 
-  var img_v1_code  = '&lt;img '       + img_params + '\n'      +
-                     '     src="'     + badge_url  + '" /&gt;' ;
-  var img_v2_code  = '&lt;a href="'   + LCTV_URL   + channel_name + '"&gt;\n' +
-                     '  &lt;img '     + img_params + '"\n'                    +
-                     '       src="'   + badge_url  + '" /&gt;\n'              +
-                     '&lt;/a&gt;'                                             ;
+  var img_v1_code  = '&lt;img src="' + badge_url   + '" /&gt;' ;
+  var img_v2_code  = '&lt;a href="'  + channel_url + '"&gt;\n'   +
+                     '  &lt;img '    + img_params  + '\n'        +
+                     '       src="'  + badge_url   + '" /&gt;\n' +
+                     '&lt;/a&gt;'                                ;
 
   ImgPre.innerHTML = (IS_V1_STYLE) ? img_v1_code : img_v2_code ;
 }

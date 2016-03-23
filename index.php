@@ -5,13 +5,12 @@ require('badges/LctvBadgeConstants.inc') ;
 /* LctvApi Constants. */
 require('api/LctvApiConstants.inc') ;
 /* LCTV API Credentials. */
-if (!file_exists('api/' . CREDENTIALS_FILE)) die(NOT_AUTHORIZED_MSG) ;
-
-require('api/' . CREDENTIALS_FILE) ;
+if (!file_exists(CREDENTIALS_INCLUDE)) die(NOT_AUTHORIZED_MSG) ;
+else require(CREDENTIALS_INCLUDE) ;
 
 
 $STATUS_V2_HTML     = "<a href=\"demos/demo-nojs.php?title=Online%20Status%20-%20Logo%20Pill&amp;badge-style="                       . STATUS_V2_STYLE     . "\">click here for embed code</a>" ;
-$STATUS_V3_HTML     = "<a href=\"demos/demo.php?title=Online%20Status%20-%20SVG%20Glassy&amp;badge-style="                           . STATUS_V3_STYLE     . "\">click here for embed code</a>" ;
+$STATUS_V3_HTML     = "<a href=\"demos/demo.php?title=Online%20Status%20-%20Glassy%20Button&amp;badge-style="                        . STATUS_V3_STYLE     . "\">click here for embed code</a>" ;
 $STATUS_V1_HTML     = "<a href=\"demos/demo-nojs.php?title=Online%20Status%20-%20Customizable%20SVG%20Pill&amp;badge-style="         . STATUS_V1_STYLE     . "\">click here for embed code</a>" ;
 $VIEWERS_V1_HTML    = "<a href=\"demos/demo-nojs.php?title=Number%20of%20Viewers%20-%20Customizable%20SVG%20Pill&amp;badge-style="   . VIEWERS_V1_STYLE    . "\">click here for embed code</a>" ;
 $FOLLOWERS_V1_HTML  = "<a href=\"demos/demo-nojs.php?title=Number%20of%20Followers%20-%20Customizable%20SVG%20Pill&amp;badge-style=" . FOLLOWERS_V1_STYLE  . "\">click here for embed code</a>" ;
@@ -33,9 +32,9 @@ $ISSUES_HTML        = "<a href=\"https://github.com/bill-auger/lctv-badges/issue
         <td><img src="img/v2/lctv-online.png"                          /></td>
         <td><img src="img/v2/lctv-offline.png"                         /></td>
         <td><?php echo $STATUS_V2_HTML ;                               ?></td></tr>
-    <tr><td>SVG Glassy                                                   </td>
-        <td><img src="img/v3/lctv-online.svg"  width="100" height="24" /></td>
-        <td><img src="img/v3/lctv-offline.svg" width="100" height="24" /></td>
+    <tr><td>Glassy Button                                                 </td>
+        <td><img src="img/v3/lctv-online.png"  width="100" height="24" /></td>
+        <td><img src="img/v3/lctv-offline.png" width="100" height="24" /></td>
         <td><?php echo $STATUS_V3_HTML ;                               ?></td></tr>
     <tr><td>Customizable SVG Pill                                        </td>
         <td><img src="img/v1/faux-online.png"                          /></td>

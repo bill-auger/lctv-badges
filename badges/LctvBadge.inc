@@ -208,17 +208,17 @@ class LctvBadgeStatus extends LctvBadge
     else if ($this->badge_style == STATUS_V3_STYLE)
     {
       header("Content-type:image/svg+xml") ;
-      echo file_get_contents(($is_online) ? V3_ONLINE_SVG : V3_OFFLINE_SVG) ;
+      echo file_get_contents(($is_online) ? V3_ONLINE_PNG : V3_OFFLINE_PNG) ;
     }
     else if ($this->badge_style == STATUS_V3_HOVER_STYLE)
     {
       header("Content-type:image/svg+xml") ;
-      echo file_get_contents(($is_online) ? V3_ONLINE_HOVER_SVG : V3_OFFLINE_HOVER_SVG) ;
+      echo file_get_contents(($is_online) ? V3_ONLINE_HOVER_PNG : V3_OFFLINE_HOVER_PNG) ;
     }
     else if ($this->badge_style == STATUS_V3_PUSHED_STYLE)
     {
       header("Content-type:image/svg+xml") ;
-      echo file_get_contents(($is_online) ? V3_ONLINE_PUSHED_SVG : V3_OFFLINE_PUSHED_SVG) ;
+      echo file_get_contents(($is_online) ? V3_ONLINE_PUSHED_PNG : V3_OFFLINE_PUSHED_PNG) ;
     }
     else /* if ($this->badge_style == STATUS_V1_STYLE) */
     {

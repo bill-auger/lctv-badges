@@ -37,7 +37,7 @@
   </p>
 
 
-  <script type="text/javascript" src="<?php echo $BADGE_JS_URL ; ?>"></script>
+  <script type="text/javascript" src="<?php echo BADGE_JS_URL ; ?>"></script>
   <script type="text/javascript">
 
 var CHANNEL_INPUT_ID = 'channel-name-input' ;
@@ -46,7 +46,7 @@ var BADGE_IMG_ID     = '<?php echo $BADGE_IMG_ID ;   ?>' ;
 var IMG_CODE_ID      = '<?php echo $IMG_CODE_ID ;    ?>' ;
 var SCRIPT_CODE_ID   = '<?php echo $SCRIPT_CODE_ID ; ?>' ;
 var BADGE_STYLE      = '<?php echo $BADGE_STYLE ;    ?>' ;
-var BADGE_JS_URL     = '<?php echo $BADGE_JS_URL ;   ?>' ;
+var BADGE_JS_URL     = '<?php echo BADGE_JS_URL ;    ?>' ;
 
 
 var ChannelInput ;

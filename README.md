@@ -9,10 +9,10 @@
         <td><img src="img/v2/lctv-online.png"                          /></td>
         <td><img src="img/v2/lctv-offline.png"                         /></td>
         <td><a href="http://codiad-billauger.rhcloud.com/demos/demo-nojs.php?title=Online%20Status%20-%20Logo%20Pill&badge-style=online-status-v2">click here for embed code</a></td></tr>
-    <tr><td>SVG Glassy                                                   </td>
-        <td><img src="img/v3/faux-online.png"  width="100" height="24" /></td>
-        <td><img src="img/v3/faux-offline.png" width="100" height="24" /></td>
-        <td><a href="http://codiad-billauger.rhcloud.com/demos/demo.php?title=Online%20Status%20-%20SVG%20Glassy&badge-style=online-status-v3">click here for embed code</a></td></tr>
+    <tr><td>Glassy Button                                                   </td>
+        <td><img src="img/v3/lctv-online.png"  width="100" height="24" /></td>
+        <td><img src="img/v3/lctv-offline.png" width="100" height="24" /></td>
+        <td><a href="http://codiad-billauger.rhcloud.com/demos/demo.php?title=Online%20Status%20-%20Glassy%20Button&badge-style=online-status-v3">click here for embed code</a></td></tr>
     <tr><td>Customizable SVG Pill                                        </td>
         <td><img src="img/v1/faux-online.png"                          /></td>
         <td><img src="img/v1/faux-offline.png"                         /></td>
