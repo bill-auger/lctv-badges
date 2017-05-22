@@ -1,4 +1,12 @@
 <?php
+/**
+ * LiveCoding.tv Badges
+ *
+ * HTML badges and link buttons for livecoding.tv online status and stream stats
+ *
+ * @package LctvBadges\LctvBadge
+ * @version 0.0.8
+ */
 
 require(__DIR__ . '/LctvBadgeConstants.inc') ;
 require(__DIR__ . '/../api/LctvApi.inc') ;
