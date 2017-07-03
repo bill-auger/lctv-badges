@@ -1,4 +1,12 @@
 <?php
+/**
+ * LiveEdu.tv Badges Demos
+ *
+ * @package LctvBadges\Demos
+ * @version 0.0.9
+ * @since 0.0.8
+ */
+
 
 /* LctvBadge Constants. */
 require('badges/LctvBadgeConstants.inc') ;
@@ -29,7 +37,7 @@ $INSTALL_HTML       = "<a href=\"https://github.com/bill-auger/lctv-badges/INSTA
 
   <h2>LCTV Badges</h2>
 
-  <p>HTML badges and link buttons for livecoding.tv online status and stream stats</p>
+  <p>HTML badges and link buttons for liveedu.tv online status and stream stats</p>
 
   <table id="demos-table">
     <tr><th colspan="4">Online Status Badges                     </th></tr>

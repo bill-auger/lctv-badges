@@ -1,6 +1,6 @@
 # LCTV Badges
 
-*HTML badges and link buttons for livecoding.tv online status and stream stats*
+*HTML badges and link buttons for liveedu.tv online status and stream stats*
 
 <table id="demos-table">
   <tr><th colspan="4">Online Status Badges                     </th></tr>

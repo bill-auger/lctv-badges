@@ -1,4 +1,12 @@
 <?php
+/**
+ * LiveEdu.tv Badges Embed Code Generator
+ *
+ * @package LctvBadges\Demos
+ * @version 0.0.9
+ * @since 0.0.8
+ */
+
 
 require_once('../api/LctvApiHelpers.inc') ;
 require_once('../badges/LctvBadgeConstants.inc') ;
