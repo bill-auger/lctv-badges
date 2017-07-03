@@ -11,7 +11,9 @@
 require_once('../api/LctvApiHelpers.inc') ;
 require_once('../badges/LctvBadgeConstants.inc') ;
 
-
+TODO: 'badge-style' is not the same as the badge 'style'
+      'badge-style' are a set of badge 'styles'
+      change this to something more semantic like 'badge-styles' or 'style-class'
 $DEMO_TITLE         = LctvApiHelpers::SanitizeGetParam('title'       , '') ;
 $BADGE_STYLE        = LctvApiHelpers::SanitizeGetParam('badge-style' , '') ;
 $BADGE_IMG_ID       = $BADGE_IMG_IDS["$BADGE_STYLE"] ;
@@ -262,7 +264,7 @@ function setEmbedCode()
                         link_param                          + ' /&gt;'    ;
   var script_code     = '\n\n&lt;script type="text/javascript"'           +
                         ' src="' + BADGES_JS_URL + '"&gt;&lt;/script&gt;' ;
-
+TODO: change V1_STYLE and V1_STYLE to be semantic
   ImgPre.innerHTML = (IS_V1_STYLE  ) ? img_custom_code             :
                      (IS_V2_STYLE  ) ? img_static_code             :
                      (IS_FLIP_STYLE) ? img_flip_code + script_code :

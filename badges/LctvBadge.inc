@@ -175,7 +175,7 @@ abstract class LctvBadge
   private function returnUnauthorizedBadge()
   {
     header( "Content-type:image/svg+xml" );
-    echo make_badge_svg_v1('' , UNAUTHORIZED_R_TEXT , RED_COLOR) ;
+    echo make_badge_svg_v1('' , UNAUTHORIZED_RTEXT , RED_COLOR) ;
     die() ;
   }
 
@@ -284,7 +284,7 @@ class LctvBadgeNextStream extends LctvBadge
     }
     else
     {
-      $badge_r_text  = NO_NEXT_STREAM_TEXT ;
+      $badge_r_text  = NO_NEXT_STREAM_RTEXT ;
       $badge_r_color = RED_COLOR ;
     }
 
@@ -333,7 +333,7 @@ class LctvBadgeLastStream extends LctvBadge
     }
     else
     {
-      $badge_r_text  = NO_LAST_STREAM_TEXT ;
+      $badge_r_text  = NO_LAST_STREAM_RTEXT ;
       $badge_r_color = RED_COLOR ;
     }
 

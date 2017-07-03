@@ -66,15 +66,15 @@ define('V3_OFFLINE_PUSHED_PNG' , '../img/v3/lctv-offline-pushed.png') ;
 // badge params
 define('GREEN_COLOR' , '#4c1'   ) ;
 define('RED_COLOR'   , '#e05d44') ;
-define('UNAUTHORIZED_R_TEXT' , 'Unauthorized'    ) ;
-define('ERROR_R_TEXT'        , 'Error'           ) ;
-define('NO_NEXT_STREAM_TEXT' , 'None'            ) ;
-define('NO_LAST_STREAM_TEXT' , 'Never'           ) ;
-define('STATUS_LTEXT'        , 'LiveEdu.tv'            ) ;
-define('VIEWERS_LTEXT'       , 'LiveEdu.tv Viewers'    ) ;
-define('FOLLOWERS_LTEXT'     , 'LiveEdu.tv Fans'       ) ;
-define('LASTSTREAM_LTEXT'    , 'LiveEdu.tv Last Stream') ;
-define('NEXTSTREAM_LTEXT'    , 'LiveEdu.tv Next Stream') ;
+define('UNAUTHORIZED_RTEXT'   , 'Unauthorized'          ) ;
+define('ERROR_RTEXT'          , 'Error'                 ) ;
+define('NO_NEXT_STREAM_RTEXT' , 'None'                  ) ;
+define('NO_LAST_STREAM_RTEXT' , 'Never'                 ) ;
+define('STATUS_LTEXT'         , 'LiveEdu.tv'            ) ;
+define('VIEWERS_LTEXT'        , 'LiveEdu.tv Viewers'    ) ;
+define('FOLLOWERS_LTEXT'      , 'LiveEdu.tv Fans'       ) ;
+define('LASTSTREAM_LTEXT'     , 'LiveEdu.tv Last Stream') ;
+define('NEXTSTREAM_LTEXT'     , 'LiveEdu.tv Next Stream') ;
 
 // error messages
 define('INVALID_CHANNEL_MSG', 'You must specify a channel name like: '           .
